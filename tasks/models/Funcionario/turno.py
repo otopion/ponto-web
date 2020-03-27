@@ -1,5 +1,7 @@
 from django.db import models
 
+from .funcionario import Funcionario
+
 
 class Turno(models.Model):
 
@@ -13,4 +15,4 @@ class Turno(models.Model):
 
     presente = models.BooleanField()
 
-    id_Funcionario = models.ForeignKey(Funcionario)
+    id_Funcionario = models.ForeignKey(Funcionario, on_delete=models.CASCADE)
