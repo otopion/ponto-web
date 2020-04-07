@@ -1,5 +1,5 @@
 <template>
-    $END$
+    <di>Congurações</di>
 </template>
 
 <script>
