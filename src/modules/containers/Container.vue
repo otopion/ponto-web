@@ -1,9 +1,7 @@
 <template>
 <div class="cont">
         <div>
-            <Header>
-
-            </Header>
+            <Header />
         </div>
         <div>
             <sidebar :items="sidebarItems" />
@@ -37,6 +35,7 @@
 .slot {
         margin-left: 270px;
         margin-top: 90px;
+        margin-right: 20px;
     }
     body{
         background-color: #eeeeee;
