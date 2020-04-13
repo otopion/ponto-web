@@ -5,6 +5,7 @@
 <script>
     import 'vue2-timepicker/dist/VueTimepicker.css'
     import VueTimepicker from 'vue2-timepicker'
+
     export default {
         name: "PontoTimePicker",
         components:{
