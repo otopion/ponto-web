@@ -32,8 +32,7 @@ export default {
             this.hora = ((new Date).toLocaleString().substr(11, 8,));
         }, 1000)
 
-    }
-
+    },
 }
 </script>
 
