@@ -3,6 +3,12 @@
         <div class="config">
             <h2>Ponto</h2>
         </div>
+
+        <div>
+            <input type="button" value="Enviar" class="btn btn-primary botao" />
+            <input type="button" value="Editar" class="btn btn-primary botao" />
+            <input type="button" value="Excluir" class="btn btn-danger botao" />
+        </div>
         <div class="fundo">
             <main class="tabela container view-home-container p-4 card shadow-sm my-3">
                 <table class="table">
@@ -18,12 +24,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row"><ponto-date-picker /></th>
+                        <th scope="row"><ponto-date-picker  /></th>
                         <td><ponto-time-picker /></td>
                         <td><ponto-time-picker /></td>
                         <td><ponto-time-picker /></td>
                         <td><ponto-time-picker /></td>
-                        <td><input type="checkbox"></td>
+                        <td><input type="checkbox" /></td>
                     </tr>
                     </tbody>
                 </table>
@@ -47,12 +53,14 @@
                 type: String,
                 required: true
             }
-        }
+        },
     }
 </script>
 
 <style scoped>
-    .fundo {
-
+    .botao {
+        width: 75px;
+        min-height: 20px;
+        margin-right: 10px;
     }
 </style>
