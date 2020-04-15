@@ -1,4 +1,4 @@
-from tasks.models.Funcionario.funcionario import Funcionario
+from ponto.tasks.models.Funcionario import Funcionario
 from rest_framework.serializers import ModelSerializer
 
 

@@ -1,4 +1,4 @@
-from tasks.models.Funcionario.turno import Turno
+from ponto.tasks.models.Funcionario import Turno
 from rest_framework.serializers import ModelSerializer
 
 

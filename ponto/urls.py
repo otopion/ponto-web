@@ -19,6 +19,6 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('tasks.urls')),
+    path('api/', include('ponto.tasks.urls')),
     path('auth/', obtain_auth_token)
 ]
