@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class TasksConfig(AppConfig):
-    name = 'ponto.tasks'
+    name = 'tasks'
+    label = 'tasks'
+
