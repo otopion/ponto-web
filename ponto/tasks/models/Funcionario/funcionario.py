@@ -1,12 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Funcionario(models.Model):
-
-    nome = models.CharField(max_length=50)
-    sobre_nome = models.CharField(max_length=50)
-    email = models.CharField(max_length=100)
-    senha = models.CharField(max_length=50)
-
+    user = models.OneToOneField(User, related_name='funcionario', on_delete=models.CASCADE)
     hora_chegada = models.TimeField()
     hora_saida = models.TimeField()
+

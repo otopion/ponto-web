@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from rest_framework import routers
-from ponto.tasks.views import TurnoViewSet, FuncionarioViewSet
+from .views import *
 
 router = routers.DefaultRouter()
 router.register('turno', TurnoViewSet)

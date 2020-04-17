@@ -39,8 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'ponto.tasks',
     'ponto',
+    'ponto.auth',
+    'ponto.tasks',
+
+
 ]
 
 MIDDLEWARE = [

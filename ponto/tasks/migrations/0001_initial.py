@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
                 ('saida_almoço', models.TimeField()),
                 ('entrada_almoço', models.TimeField()),
                 ('presente', models.BooleanField()),
-                ('id_Funcionario', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='ponto.tasks.Funcionario')),
+                ('id_Funcionario', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.Funcionario')),
             ],
         ),
     ]

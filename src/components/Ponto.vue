@@ -3,12 +3,6 @@
         <div class="config">
             <h2>Ponto</h2>
         </div>
-
-        <div>
-            <input type="button" value="Enviar" class="btn btn-primary botao" />
-            <input type="button" value="Editar" class="btn btn-primary botao" />
-            <input type="button" value="Excluir" class="btn btn-danger botao" />
-        </div>
         <div class="fundo">
             <main class="tabela container view-home-container p-4 card shadow-sm my-3">
                 <table class="table">
@@ -58,9 +52,5 @@
 </script>
 
 <style scoped>
-    .botao {
-        width: 75px;
-        min-height: 20px;
-        margin-right: 10px;
-    }
+
 </style>
