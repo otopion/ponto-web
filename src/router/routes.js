@@ -11,7 +11,7 @@ export default new Router({
             meta: {
                 title: 'Login',
             },
-            component: () => import(/* webpackChunkName: "ponto_web" */ "../components/Login.vue"),
+            component: () => import(/* webpackChunkName: "ponto_web" */ "../modules/auth/views/Login.vue"),
         },
         {
             path: '/',
