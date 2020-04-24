@@ -2,7 +2,6 @@ from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers, exceptions
-from ..tasks.models.Funcionario.funcionario import Funcionario
 
 
 class LoginRequestSerializer (serializers.Serializer):
@@ -36,7 +35,6 @@ class LoginResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = [
-            'id',
             'username',
             'email',
             'first_name',
@@ -52,7 +50,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = [
-            'id',
             'username',
             'password',
             'first_name',

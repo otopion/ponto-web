@@ -7,8 +7,6 @@ from rest_framework.response import Response
 
 from ponto.auth.serializers import LoginRequestSerializer, LoginResponseSerializer
 
-from ponto.tasks.models.Funcionario.funcionario import Funcionario
-
 sensitive_post_parameters_m = method_decorator(
     sensitive_post_parameters(
         'password', 'old_password', 'new_password1', 'new_password2'

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'ponto',
     'ponto.auth',
     'ponto.tasks',
@@ -73,6 +72,22 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'ponto': {
+            'handlers': ['console'],
+            'level': 'DEBUG'
+        },
+    },
+}
 
 WSGI_APPLICATION = 'ponto.wsgi.application'
 
@@ -124,11 +139,15 @@ USE_L10N = True
 
 USE_TZ = True
 
+SESSION_COOKIE_NAME = 'pontosessionid'
+
+CSRF_COOKIE_NAME = 'pontocsrftoken'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

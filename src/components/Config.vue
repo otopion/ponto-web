@@ -15,9 +15,9 @@
       </thead>
       <tbody>
         <tr>
-          <th scope="row"><span v-if="isAuthenticated">{{ user.first_name }}</span></th>
-          <td><span v-if="isAuthenticated">{{ user.last_name }}</span></td>
-          <td><span v-if="isAuthenticated">{{ user.email }}</span></td>
+          <th scope="row"><span>{{ user.first_name }}</span></th>
+          <td><span >{{ user.last_name }}</span></td>
+          <td><span >{{ user.email }}</span></td>
         </tr>
       </tbody>
     </table>
@@ -35,9 +35,6 @@ export default {
         user() {
             return this.$store.state.auth.user;
         },
-        isAuthenticated() {
-            return this.$store.getters["auth/isAuthenticated"];
-        }
     },
 }
 

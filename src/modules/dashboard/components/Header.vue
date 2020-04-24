@@ -7,10 +7,10 @@
             <b-nav-item-dropdown class="nav-item dropdown m-2" right>
 
                 <template v-slot:button-content>
-                    <span>User</span>
+                    <span v-if="isAuthenticated">{{ user.username }}</span>
                 </template>
 
-                <b-dropdown-item>Sair</b-dropdown-item>
+                <b-dropdown-item @click="logout">Sair</b-dropdown-item>
 
             </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -21,11 +21,26 @@
 <script>
     export default {
         name: "Header",
+        computed: {
+        user() {
+            return this.$store.state.auth.user;
+        },
+        isAuthenticated() {
+            return this.$store.getters["auth/isAuthenticated"];
+        }
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch("auth/logout").then(() => {
+                this.$router.push({
+                    name: "login"
+                });
+            });
+        }
+    }
     }
 </script>
 
 <style scoped>
-.navbar.type{
-    background-color: #00aeef;
-}
+
 </style>

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Container from "../modules/containers/Container";
+import Container from "../modules/dashboard/containers/Container";
 
 export default {
     components: {

@@ -1,4 +1,4 @@
-import http from "./http";
+import http from "@/api/http";
 
 export default {
   login(username, password, rememberMe) {
@@ -13,5 +13,6 @@ export default {
   },
   getUser() {
     return http.get("/api/auth/user/");
-  }
+  },
+
 };

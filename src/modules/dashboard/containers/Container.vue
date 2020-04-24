@@ -13,8 +13,8 @@
 </template>
 
 <script>
-    import Sidebar from "../Sidebar";
-    import Header from "../Header";
+    import Sidebar from "../components/Sidebar";
+    import Header from "../components/Header";
 
     export default {
         name: "Container",
@@ -27,7 +27,7 @@
                  required: true,
                  type: Array
              }
-         }
+         },
     }
 </script>
 
@@ -36,8 +36,12 @@
         margin-left: 270px;
         margin-top: 90px;
         margin-right: 20px;
-    }
-    body{
         background-color: #eeeeee;
     }
+    .cont
+    {
+        background-color: #eeeeee;
+        height: 620px;
+    }
+
 </style>

@@ -1,7 +1,7 @@
 <template>
 <div class="center font-weight-bold" v-onLoad="showTime()">
     <div class="name">
-        <h2>User</h2>
+        <h2><span v-if="isAuthenticated">{{ user.first_name }}</span></h2>
     </div>
     <div class="data">
         <h3>{{ data }}</h3>
@@ -16,7 +16,6 @@
 export default {
   name: "Home",
   props:["hora","data"],
-
     methods:{
       showTime(){
           let dayName = new Array ("domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado")
@@ -24,7 +23,7 @@ export default {
 
           this.hora = ((new Date).toLocaleString().substr(11, 8,));
           let date = new Date();
-          this.data = dayName[date.getDay() ]+", "+(date.getDay()+12)+" de "+monName[date.getMonth()]+" de "+date.getFullYear();
+          this.data = dayName[date.getDay() ]+", "+(date.getDay()+19)+" de "+monName[date.getMonth()]+" de "+date.getFullYear();
             },
     },
     mounted() {
@@ -33,6 +32,15 @@ export default {
         }, 1000)
 
     },
+
+        computed: {
+            user() {
+                return this.$store.state.auth.user;
+            },
+            isAuthenticated() {
+                return this.$store.getters["auth/isAuthenticated"];
+            }
+        }
 }
 </script>
 

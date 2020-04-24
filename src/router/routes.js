@@ -1,18 +1,8 @@
-import Vue from 'vue';
-import Router from 'vue-router'
+import { requireAuthenticated } from "../modules/auth/guards";
+import { routes as authRoutes, guards as authGuards } from "@/modules/auth";
 
-Vue.use(Router);
-
-export default new Router({
-    routes: [
-        {
-            path: '/login',
-            name: 'login',
-            meta: {
-                title: 'Login',
-            },
-            component: () => import(/* webpackChunkName: "ponto_web" */ "../modules/auth/views/Login.vue"),
-        },
+export default [
+    ...authRoutes,
         {
             path: '/',
             name: 'pontoWeb',
@@ -21,6 +11,7 @@ export default new Router({
                 excludeBreadcrumb: true
             },
             component: () => import(/* webpackChunkName: "ponto_web" */ "../views/PontoWeb.vue"),
+            beforeEnter: authGuards.requireAuthenticated,
             redirect: {
                 name: "home"
             },
@@ -42,14 +33,13 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "ponto_web" */ "../components/Ponto.vue")
                 },
                 {
-                    path: 'config',
-                    name: 'configuracoes',
-                    meta: {
-                        title: "Configurações"
-                    },
-                    component: () => import(/* webpackChunkName: "ponto_web" */ "../components/Config.vue")
+                    path: "/config",
+                    name: "configuracao",
+                    component: () =>
+                      import("../components/Config.vue"),
+                    beforeEnter: requireAuthenticated
+
                 },
             ]
-        }],
-    mode: "history"
-})
+        }
+]
