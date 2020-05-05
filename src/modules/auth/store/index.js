@@ -5,7 +5,7 @@ import getters from "./getters";
 
 const initialState = {
   authenticating: false,
-  user: null
+  user: null,
 };
 
 if (isProduction) {
@@ -15,6 +15,9 @@ if (isProduction) {
 export default {
   namespaced: true,
   state: initialState,
+  modules: {
+    acconts: require("./acconts").default
+  },
   actions,
   mutations,
   getters

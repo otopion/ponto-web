@@ -1,13 +1,9 @@
-from django.urls import path, include
-
-from rest_framework import routers
-from .views import *
-
-router = routers.DefaultRouter()
-router.register('turno', TurnoViewSet)
-router.register('funcionario', FuncionarioViewSet)
-
+from django.urls import path
+from ponto.tasks import views
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('turno/', views.turno, name='turno'),
+    path('turno/<int:pk>/', views.turno, name='turno'),
+    path('funcionario/', views.funcionario, name='funcionario'),
+    path('funcionario/<int:pk>/', views.funcionario, name='funcionario'),
 ]

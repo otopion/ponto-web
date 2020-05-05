@@ -59,7 +59,7 @@
       </b-button>
 
       <div class="bottom-links">
-        <p>Você não tem uma conta? <a href="">Cadastrar</a></p>
+        <p>Você não tem uma conta? <a href="cadastro">Cadastrar</a></p>
       </div>
     </b-form>
     </div>

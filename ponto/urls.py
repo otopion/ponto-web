@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('ponto.tasks.urls')),
     path('api/auth/', include('ponto.auth.urls')),
+    path('api/acconts/', include('ponto.acconts.urls'))
 ]
