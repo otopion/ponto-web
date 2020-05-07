@@ -6,6 +6,7 @@ import getters from "./getters";
 const initialState = {
   authenticating: false,
   user: null,
+  funcionario: null,
 };
 
 if (isProduction) {

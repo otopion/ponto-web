@@ -29,5 +29,8 @@ export default {
       hora_chegada,
       hora_saida
     })
-  }
+  },
+  getFuncionario(){
+     return http.get("/api/funcionario/");
+  },
 };

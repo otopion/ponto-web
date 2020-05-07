@@ -6,7 +6,8 @@ class FuncionarioSerializer(ModelSerializer):
     class Meta:
         model = Funcionario
         fields = [
-            'user',
+            'id',
             'hora_chegada',
             'hora_saida',
+            'user',
         ]

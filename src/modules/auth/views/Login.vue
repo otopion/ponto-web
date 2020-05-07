@@ -95,6 +95,9 @@
             },
             isAuthenticated() {
                 return this.$store.getters["auth/isAuthenticated"];
+            },
+            fun(){
+                return this.$store.getters["auth/fun"];
             }
         },
 
