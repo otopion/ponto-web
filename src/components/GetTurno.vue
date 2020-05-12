@@ -1,6 +1,6 @@
 <template>
     <tbody>
-    <tr v-for="(item, i ) in turno" :key="i">
+    <tr v-for="(item, i ) in filter" :key="i">
         <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.data }}</td>
         <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.hora_chegada }}</td>
         <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.hora_saida }}</td>
@@ -20,12 +20,24 @@
     import  'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
     export default {
         name: "GetTurno",
+
         computed:{
             funcionario() {
                 return this.$store.state.auth.funcionario;
             },
             turno() {
                 return this.$store.state.auth.turno.slice().reverse();
+            },
+            pesquisa:{
+                get() {
+                    return this.$store.state.ponto.pesquisa;
+                },
+            },
+
+            filter: function(){
+                return this.turno.filter((item) =>{
+                    return item.data.match(this.pesquisa)
+                })
             }
         },
     }

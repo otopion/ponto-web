@@ -1,10 +1,13 @@
-import {SET_DIA, SET_TURNO} from "./types";
+import {SET_DIA, SET_PESQUISA, SET_TURNO} from "./types";
 import ponto from "../../api/ponto";
 import { isProduction } from "@/utils";
 
 export default {
     setDia({ commit }, data){
         commit(SET_DIA, data);
+    },
+    setPesquisa({ commit }, data){
+        commit(SET_PESQUISA, data)
     },
     postTurno({ dia, chegada, saida, saida_almoco, entrada_almoco, presente, id_Funcionario }) {
             return ponto

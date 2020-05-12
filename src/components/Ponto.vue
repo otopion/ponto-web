@@ -9,8 +9,13 @@
         <div class="erro" v-if="dia.value!==''">
             {{ chegada.invalidFeedback }}
         </div>
+        <div class="lupa">
+            <b-icon icon="search" />
+          </div>
+        <div class="pesquisa">
+          <ponto-date-picker v-model="pesquisa" />
+        </div>
         <div class="fundo">
-
             <main class="tabela container view-home-container p-4 card shadow-sm my-3">
                 <b-form @submit.prevent="onSubmit">
                 <table class="table">
@@ -64,6 +69,11 @@
             funcionario() {
                 return this.$store.state.auth.funcionario;
             },
+            pesquisa: {
+                set(value) {
+                    this.$store.dispatch("ponto/setPesquisa", value);
+                }
+            },
         },
         data(){
             return {
@@ -81,7 +91,6 @@
                 saida_almoco: "",
                 entra_almoco: "",
                 falta: false,
-                form: null,
             }
         },
         methods:{
@@ -114,6 +123,10 @@
                         this.dia.invalidFeedback = "informe a data de hoje";
                     }
 
+                    if(this.chegada.value.HH == "" || this.chegada.value.mm == ""){
+                        this.chegada.state = false;
+                        this.chegada.invalidFeedback = "informe a hora de chegada";
+                    }
                     if(this.chegada.value == ""){
                         this.chegada.state = false;
                         this.chegada.invalidFeedback = "informe a hora de chegada";
@@ -138,6 +151,16 @@
         top: 100px;
         right: 500px;
         color: red;
+    }
+    .pesquisa{
+        position: absolute;
+        top: 95px;
+        margin-left: 800px;
+    }
+    .lupa{
+        position: absolute;
+        top: 100px;
+        margin-left: 770px;
     }
 
 </style>

@@ -14,7 +14,6 @@
 <script>
 import DatePick from "vuejs-datepicker/dist/vuejs-datepicker";
 import ptBR from "vuejs-datepicker/dist/locale/translations/pt-BR";
-import parseISO from "date-fns/parseISO";
 import formatISO from "date-fns/formatISO";
 
 export default {
@@ -31,12 +30,6 @@ export default {
     computed: {
         language() {
             return ptBR;
-        },
-        dateValue() {
-            if (this.value === "") {
-                return null;
-            }
-            return parseISO(this.value);
         },
     },
     mounted() {

@@ -3,8 +3,9 @@ import getters from "./getters"
 import mutations from "./mutations";
 
 const initialState = {
-  dia: "",
-  turno: null,
+      dia: "",
+      turno: null,
+      pesquisa: "",
 };
 
 export default {
