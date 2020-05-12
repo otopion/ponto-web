@@ -1,4 +1,4 @@
-import { LOGIN_BEGIN, LOGIN_END, SET_USER, SET_FUNCIONARIO } from "./types";
+import { LOGIN_BEGIN, LOGIN_END, SET_USER, SET_FUNCIONARIO, SET_TURNO } from "./types";
 
 export default {
   [LOGIN_BEGIN](state) {
@@ -13,4 +13,7 @@ export default {
   [SET_FUNCIONARIO](state, funcionario){
     state.funcionario = funcionario;
   },
+      [SET_TURNO](state, data){
+        state.turno = data;
+    }
 };

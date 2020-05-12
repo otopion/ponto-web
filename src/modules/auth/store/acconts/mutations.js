@@ -11,9 +11,9 @@ export default {
     state.cadas_user = user;
   },
   [SET_CHEGADA](state, date){
-    state.hora_chegada = date
+    state.hora_chegada = date;
   },
   [SET_SAIDA](state, date){
-    state.hora_saida = date
+    state.hora_saida = date;
   }
 };

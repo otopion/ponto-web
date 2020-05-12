@@ -1,8 +1,17 @@
 from ponto.tasks.models.Funcionario import Turno
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 
 
-class TurnoSerializer(ModelSerializer):
+class TurnoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Turno
-        fields = '__all__'
+        fields = [
+            "id",
+            "data",
+            "hora_chegada",
+            "hora_saida",
+            "saida_almoco",
+            "entrada_almoco",
+            "presente",
+            "id_Funcionario",
+        ]

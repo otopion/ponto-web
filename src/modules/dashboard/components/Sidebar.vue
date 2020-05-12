@@ -8,7 +8,7 @@
 		:key="i">
 			<router-link class="nav nav-link" :to="item.url">
 			<a class="list-group-item list-group-item-action bg-light">
-				<i :class="item.icon" class="icon" />
+				<b-icon :icon="item.icon" class="icon" />
 				<i id="text">{{ item.text }}</i>
 				</a>
 			</router-link>

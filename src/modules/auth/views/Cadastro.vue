@@ -231,6 +231,10 @@
                         this.nonFieldErrorMessage = data.non_field_errors[0];
                         this.password.value = "";
                     }
+
+                    if(!this.hora_chegada){
+                        this.erro = "preencha";
+                    }
                     this.focusUsername();
                 } else {
                     this.nonFieldErrorMessage =

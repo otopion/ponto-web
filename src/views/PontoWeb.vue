@@ -16,17 +16,17 @@ export default {
                 {
                     text: "Home",
                     url : "home",
-                    icon: "ion-ios-home"
+                    icon: "house-door"
                 },
                 {
                     text: "Ponto",
                     url : "ponto",
-                    icon: "ion-ios-time"
+                    icon: "stopwatch"
                 },
                 {
                     text: "Configurações",
                     url : "config",
-                    icon: "ion-ios-settings"
+                    icon: "gear"
                 }
             ]
         })

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { store as auth } from "@/modules/auth";
-import ponto from "../api/ponto";
+import ponto from "../store/ponto";
 import { isProduction } from "@/utils";
 import createLogger from "vuex/dist/logger";
 

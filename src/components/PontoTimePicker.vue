@@ -2,6 +2,7 @@
     <vue-timepicker
             format="HH:mm"
             @input="onInput"
+            class="time"
     />
 </template>
 
@@ -35,5 +36,7 @@
 </script>
 
 <style scoped>
-
+    .time{
+        width: 150px;
+    }
 </style>

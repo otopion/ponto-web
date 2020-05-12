@@ -3,7 +3,8 @@ import getters from "./getters"
 import mutations from "./mutations";
 
 const initialState = {
-  funcioonario: null,
+  dia: "",
+  turno: null,
 };
 
 export default {

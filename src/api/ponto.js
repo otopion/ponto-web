@@ -1,10 +1,18 @@
 import http from "./http";
 
 export default {
-    getTurno(){
-      return http.get()("/api/turno/");
+    postTurno(dia, chegada, saida, saida_almoco, entrada_almoco, presente, id_Funcionario){
+        return http.post("/api/turno-management/", {
+            dia,
+            chegada,
+            saida,
+            saida_almoco,
+            entrada_almoco,
+            presente,
+            id_Funcionario
+        });
     },
-    postTurno(){
-        return http.post("api/turno-management/")
+    getTurno(){
+        return http.get("/api/turno/");
     }
 }
