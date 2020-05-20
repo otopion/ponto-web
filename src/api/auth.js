@@ -23,11 +23,11 @@ export default {
       password
     })
   },
-  setHorario(user, hora_chegada, hora_saida){
-    return http.post("/api/funcionario/", {
-      user,
+  setHorario(hora_chegada, hora_saida, user){
+    return http.post("/api/funcionario-management/", {
       hora_chegada,
-      hora_saida
+      hora_saida,
+      user
     })
   },
   getFuncionario(){

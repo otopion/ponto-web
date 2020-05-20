@@ -23,14 +23,13 @@ export default {
 
           this.hora = ((new Date).toLocaleString().substr(11, 8,));
           let date = new Date();
-          this.data = dayName[date.getDay() ]+", "+date.getDay()+" de "+monName[date.getMonth()]+" de "+date.getFullYear();
+          this.data = dayName[date.getDay() ]+", "+date.getDate()+" de "+monName[date.getMonth()]+" de "+date.getFullYear();
             },
     },
     mounted() {
       setInterval(() => {
             this.hora = ((new Date).toLocaleString().substr(11, 8,));
         }, 1000)
-
     },
 
         computed: {

@@ -14,6 +14,11 @@ export default {
   getUser() {
     return http.get("/api/auth/user/");
   },
+  getLastUser(){
+      // eslint-disable-next-line no-debugger
+      debugger;
+      return http.get("/api/auth/last-user");
+  },
   cadastrar(username, email, first_name, last_name, password){
     return http.post("/api/acconts/cadastrar/", {
       username,
@@ -23,11 +28,13 @@ export default {
       password
     })
   },
-  setHorario(user, hora_chegada, hora_saida){
-    return http.post("/api/funcionario/", {
-      user,
+ setHorario(hora_chegada, hora_saida, user){
+   // eslint-disable-next-line no-debugger
+    debugger;
+    return http.post("/api/funcionario-management/", {
       hora_chegada,
-      hora_saida
+      hora_saida,
+      user
     })
   },
   getFuncionario(){

@@ -3,6 +3,8 @@
             format="HH:mm"
             @input="onInput"
             class="time"
+            auto-scroll
+            manual-input
     />
 </template>
 
@@ -12,6 +14,11 @@
     import ptBR from "vuejs-datepicker/dist/locale/translations/pt-BR";
 
     export default {
+        computed: {
+        language() {
+            return ptBR;
+        },
+    },
         name: "PontoTimePicker",
         components:{
             VueTimepicker
@@ -22,11 +29,6 @@
                 required: true
             }
         },
-        computed: {
-        language() {
-            return ptBR;
-        },
-    },
         methods: {
         onInput(value) {
             this.$emit("input", value);
@@ -37,6 +39,6 @@
 
 <style scoped>
     .time{
-        width: 150px;
+        width: 145px;
     }
 </style>

@@ -1,18 +1,29 @@
 import auth from "@/modules/auth/api";
-import { CADAS_BEGIN, CADAS_END, SET_USER_CADAS, SET_SAIDA, SET_CHEGADA } from "./types";
+import {CADAS_BEGIN, CADAS_END, SET_SAIDA, SET_CHEGADA, SET_LAST_USER} from "./types";
 
 export default {
+    getLastUser({ commit }) {
+        // eslint-disable-next-line no-debugger
+        debugger;
+        return auth
+            .getLastUser()
+            .then(({ data }) => {
+            commit(SET_LAST_USER, data);
+            })
+    },
     cadastrar({ commit },{username, email, first_name, last_name, password}) {
         commit(CADAS_BEGIN);
             return auth
                 .cadastrar(username, email, first_name, last_name, password)
-                .then(({data}) => commit(SET_USER_CADAS, data))
                 .finally(() => commit(CADAS_END))
     },
-    setHorario({ commit }, {user, hora_chegada, hora_saida}) {
+
+    // eslint-disable-next-line no-unused-vars
+    setHorario({ commit }, { hora_chegada, hora_saida, user }) {
+        // eslint-disable-next-line no-debugger
+        debugger;
             return auth
-                .setHorario(user, hora_chegada, hora_saida)
-                .finally(() => commit(CADAS_END))
+                .setHorario(hora_chegada, hora_saida, user)
     },
     setChegada({ commit }, date) {
     commit(SET_CHEGADA, date);

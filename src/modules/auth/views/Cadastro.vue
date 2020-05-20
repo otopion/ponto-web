@@ -150,6 +150,11 @@
                     this.$store.dispatch("auth/setSaida", value);
                 }
             },
+            lastUser: {
+                get() {
+                    return this.$store.state.auth.acconts.lastUser
+                }
+            },
         },
         mounted() {
             this.focusUsername();
@@ -181,12 +186,24 @@
                 };
 
 
+
                 try {
                     await this.$store.dispatch("auth/cadastrar", data);
+                    await this.$store.dispatch("auth/getLastUser");
+
+                    const hour = {
+                        hora_chegada: this.hora_chegada.HH +":"+ this.hora_chegada.mm,
+                        hora_saida: this.hora_saida.HH +":"+ this.hora_saida.mm,
+                        user: this.lastUser.id,
+                    };
+
+                    await this.$store.dispatch("auth/setHorario", hour);
+
+                    alert("Registrado com sucesso!!");
+
                     this.$router.push({
                         name: "login"
                     });
-
                 }
                 catch ({ response }) {
                 if (response.status === 400) {

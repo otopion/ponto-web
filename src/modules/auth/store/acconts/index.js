@@ -5,7 +5,7 @@ const initialState = {
   setCadastro: false,
   hora_saida: "",
   hora_chegada: "",
-  cadas_user: null,
+  lasUser: null,
 };
 
 

@@ -1,8 +1,7 @@
 import { isProduction } from "@/utils";
 import { LOGIN_BEGIN, LOGIN_END, SET_USER, SET_FUNCIONARIO } from "./types";
 import auth from "../api";
-import ponto from "../../../api/ponto";
-import {SET_TURNO} from "../../../store/ponto/types";
+
 
 export default {
   login({ commit }, { username, password, rememberMe }) {
@@ -42,20 +41,6 @@ export default {
             resolve();
           });
       }
-      return new Promise(resolve => {
-      if (isProduction) {
-        resolve();
-      } else {
-        ponto
-          .getTurno()
-          .then(({ data }) => {
-            commit(SET_TURNO, data);
-          })
-          .finally(() => {
-            resolve();
-          });
-      }
-    });
     });
     });
   }

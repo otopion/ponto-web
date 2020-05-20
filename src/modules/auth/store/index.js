@@ -7,7 +7,6 @@ const initialState = {
   authenticating: false,
   user: null,
   funcionario: null,
-  turno: null,
 };
 
 if (isProduction) {
