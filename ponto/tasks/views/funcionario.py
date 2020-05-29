@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from rest_framework.permissions import IsAuthenticated
 from ponto.auth.permissions import IsActive
 from ponto.tasks.serializers.Funcionario.funcionario import FuncionarioSerializer

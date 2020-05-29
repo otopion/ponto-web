@@ -1,3 +1,5 @@
 export default {
-  getTurno: (state) => state.turno
+  getTurno(state) {
+    return state.turno
+  }
 };

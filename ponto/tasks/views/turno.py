@@ -9,8 +9,9 @@ from django.http.request import HttpRequest
 
 
 class TurnoViewSet(viewsets.ModelViewSet):
+
     def get_queryset(self):
-        self.queryset = Turno.objects.all()
+        self.queryset = Turno.objects.filter(id_Funcionario=self.request.user.funcionario.id)
         return self.queryset
 
     serializer_class = TurnoSerializer

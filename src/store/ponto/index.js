@@ -12,6 +12,7 @@ const initialState = {
     loadingTurno: false,
     hasChanges: false,
     changingData: false,
+    hour: "",
 };
 
 export default {

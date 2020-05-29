@@ -1,5 +1,6 @@
 import * as types from "./types";
 import ponto from "../../api/ponto";
+
 export default {
     setDia({ commit }, data){
         commit(types.SET_DIA, data);
@@ -12,6 +13,9 @@ export default {
     },
     setEdit({ commit }, data){
       commit(types.SET_EDIT, data)
+    },
+    setHour({ commit }, data){
+      commit(types.SET_HOUR, data)
     },
     getTurno({ commit }){
         commit(types.SET_LOADING_TURNO, true);

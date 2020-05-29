@@ -5,6 +5,7 @@
             class="time"
             auto-scroll
             manual-input
+            ref="time"
     />
 </template>
 
@@ -15,10 +16,16 @@
 
     export default {
         computed: {
-        language() {
-            return ptBR;
+            language() {
+                return ptBR;
+            },
+            hour:{
+                get() {
+                    return this.$store.state.ponto.hour;
+                },
+
+            },
         },
-    },
         name: "PontoTimePicker",
         components:{
             VueTimepicker
@@ -32,6 +39,9 @@
         methods: {
         onInput(value) {
             this.$emit("input", value);
+        },
+        clear(){
+            this.$emit('input')
         }
     }
     }
@@ -39,6 +49,6 @@
 
 <style scoped>
     .time{
-        width: 145px;
+        width: 140px;
     }
 </style>

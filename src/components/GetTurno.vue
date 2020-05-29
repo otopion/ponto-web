@@ -1,29 +1,35 @@
 <template>
     <tbody>
-    <tr v-for="(item, i ) in filter" :key="i">
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.data }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.hora_chegada }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.hora_saida }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.saida_almoco }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.entrada_almoco }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">{{ item.presente }}</td>
-        <td v-if="item.id_Funcionario===funcionario[0].id">
+    <tr v-for="(item, i ) in pageOfItems" :key="i">
+        <td>{{ item.data }}</td>
+        <td>{{ item.hora_chegada }}</td>
+        <td>{{ item.hora_saida }}</td>
+        <td>{{ item.saida_almoco }}</td>
+        <td>{{ item.entrada_almoco }}</td>
+        <td>{{ item.presente }}</td>
+        <td>
             <b-button class="op" @click="abrir(item)" variant="primary"><b-icon class="icon" icon="pencil-square"/> </b-button>
             <b-button @click="excluir(item.id)" class="op" variant="danger"><b-icon class="icon" icon="trash"/></b-button>
         </td>
     </tr>
+    <tr>
+        <td colspan="7"><jw-pagination id="pagenation" :items="filter" @changePage="onChangePage" ></jw-pagination></td>
+    </tr>
     </tbody>
+
 </template>
-
 <script>
-
     import  'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
-
+    import JwPagination from 'jw-vue-pagination';
     export default {
         name: "GetTurno",
+        components:{
+          JwPagination,
+        },
         data(){
             return{
                 item: [],
+                pageOfItems: [],
             }
         },
         computed:{
@@ -58,13 +64,13 @@
 
             filter: function(){
                 return this.turno.filter((item) =>{
-                    return item.data.match(this.pesquisa.split('-').reverse().join('/'))
+                    return item.data.match(this.pesquisa.split('/').reverse().join('-'))
                 })
             },
         },
 
         mounted() {
-            this.$store.dispatch("ponto/getTurno");
+
             let i = 0;
             while(this.turno[i] != null) {
                 this.turno[i].data = this.turno[i].data.split('-').reverse().join('/');
@@ -81,6 +87,10 @@
             }
         },
         methods:{
+            onChangePage(pageOfItems) {
+                this.pageOfItems = pageOfItems;
+                window.scrollTo(0, 0);
+            },
            excluir(id) {
                 try {
                     this.delet = id;
@@ -100,6 +110,7 @@
 </script>
 
 <style scoped>
+
     .op{
         width: 30px;
         height: 30px;
@@ -113,5 +124,11 @@
     }
     .icon{
         margin-left: 10px;
+    }
+    #pagenation{
+        left: 30%;
+        width: 380px;
+        position: relative;
+        margin-left: 125px;
     }
 </style>

@@ -70,14 +70,26 @@
           <ponto-time-picker
             v-model="hora_chegada" />
           <label>Hora de entrada</label>
+          <b-form-group
+              :invalid-feedback="erro_chegada.invalidFeedback"
+              :state="erro_chegada.state"
+            >
+            </b-form-group>
       </div>
+
         <div class="col-lg-6">
           <ponto-time-picker
             v-model="hora_saida"
              />
             <label>Hora de saída</label>
+            <b-form-group
+              :invalid-feedback="erro_saida.invalidFeedback"
+              :state="erro_saida.state"
+            >
+            </b-form-group>
       </div>
-            {{ erro }}
+
+
         </div>
 
       <b-button type="submit" class="login-btn">Cadastrar</b-button>
@@ -129,8 +141,14 @@
                     invalidFeedback: ""
                 },
                 nonFieldErrorMessage: "",
-                erro: "",
-                user : 2,
+                erro_chegada: {
+                    state: null,
+                    invalidFeedback: "",
+                },
+                erro_saida: {
+                    state: null,
+                    invalidFeedback: "",
+                },
             }
         },
         computed: {
@@ -175,7 +193,10 @@
                 this.last_name.invalidFeedback = "";
                 this.password.state = null;
                 this.password.invalidFeedback = "";
-                this.erro = "";
+                this.erro_chegada.state = null;
+                this.erro_chegada.invalidFeedback = "";
+                this.erro_saida.state = null;
+                this.erro_saida.invalidFeedback = "";
 
                 const data = {
                     username: this.username.value,
@@ -224,17 +245,17 @@
                         this.email.invalidFeedback = data.email[0];
                     }
 
-                    if (this.email.value == "") {
+                    if (this.email.value === "") {
                         this.email.state = false;
                         this.email.invalidFeedback = "Este campo não pode ser em branco.";
                     }
 
-                    if (this.first_name.value == "") {
+                    if (this.first_name.value === "") {
                         this.first_name.state = false;
                         this.first_name.invalidFeedback = "Este campo não pode ser em branco.";
                     }
 
-                    if (this.last_name.value == "") {
+                    if (this.last_name.value === "") {
                         this.last_name.state = false;
                         this.last_name.invalidFeedback = "Este campo não pode ser em branco.";
                     }
@@ -249,8 +270,14 @@
                         this.password.value = "";
                     }
 
-                    if(!this.hora_chegada){
-                        this.erro = "preencha";
+                    if(!this.hora_chegada.HH || !this.hora_chegada.mm){
+                        this.erro_chegada.state = false;
+                        this.erro_chegada.invalidFeedback = "Este campo não pode ser em branco";
+                    }
+
+                    if(!this.hora_saida.HH || !this.hora_saida.mm){
+                        this.erro_saida.state = false;
+                        this.erro_saida.invalidFeedback = "Este campo não pode ser em branco";
                     }
                     this.focusUsername();
                 } else {

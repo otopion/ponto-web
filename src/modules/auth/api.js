@@ -15,8 +15,6 @@ export default {
     return http.get("/api/auth/user/");
   },
   getLastUser(){
-      // eslint-disable-next-line no-debugger
-      debugger;
       return http.get("/api/auth/last-user");
   },
   cadastrar(username, email, first_name, last_name, password){
@@ -29,8 +27,6 @@ export default {
     })
   },
  setHorario(hora_chegada, hora_saida, user){
-   // eslint-disable-next-line no-debugger
-    debugger;
     return http.post("/api/funcionario-management/", {
       hora_chegada,
       hora_saida,

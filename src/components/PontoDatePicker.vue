@@ -1,13 +1,13 @@
 <template>
     <date-pick
-        class=""
         @input="onInput"
         placeholder="Data"
         format="dd/MM/yyyy"
         :language="language"
-        clear-button-icon="fas fa-times"
+        clear-button-icon
         clear-button
         bootstrap-styling
+        ref="myDatepicker"
     />
 </template>
 
@@ -24,8 +24,8 @@ export default {
     props: {
         value: {
             type: String,
-            required: true
-        }
+            required: true,
+        },
     },
     computed: {
         language() {

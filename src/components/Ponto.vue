@@ -33,10 +33,10 @@
                         <thead>
                         <tr>
                             <td>
-                                <ponto-date-picker v-model="dia.value"/>
+                                <ponto-date-picker ref="date" v-model="dia.value"/>
                             </td>
                             <td>
-                                <ponto-time-picker v-model="hora_chegada.value" manual-input/>
+                                <ponto-time-picker ref="date" v-model="hora_chegada.value"/>
                             </td>
                             <td>
                                 <ponto-time-picker v-model="hora_saida"/>
@@ -69,6 +69,7 @@
     import PontoTimePicker from "./PontoTimePicker";
     import GetTurno from "./GetTurno";
     import EditPonto from "./EditPonto";
+    import { mapActions } from 'vuex'
 
     export default {
         name: "Ponto",
@@ -76,7 +77,7 @@
             EditPonto,
             GetTurno,
             PontoDatePicker,
-            PontoTimePicker
+            PontoTimePicker,
         },
         computed: {
             funcionario() {
@@ -87,6 +88,14 @@
                     this.$store.dispatch("ponto/setPesquisa", value);
                 }
             },
+            turno() {
+                 return this.$store.state.ponto.turno.slice().reverse();
+            },
+            hour: {
+                set(value) {
+                    this.$store.dispatch("ponto/setHour", value);
+                },
+            }
         },
         data() {
             return {
@@ -97,7 +106,7 @@
                 },
                 hora_chegada: {
                     state: null,
-                    value: "00:00",
+                    value: "",
                     invalidFeedback: ""
                 },
                 hora_saida: "",
@@ -110,6 +119,9 @@
 
         },
         methods: {
+            ...mapActions({
+                getTurno: 'getTurno'
+            }),
             async onSubmit() {
                 this.dia.invalidFeedback = "";
                 this.dia.state = null;
@@ -129,17 +141,20 @@
                 try {
                     await this.$store.dispatch("ponto/postTurno", data);
                     alert("inserido com sucesso!");
+                    this.hora_chegada.value = "";
                 } catch ({response}) {
                     if (response.status === 400) {
 
                         if (this.dia.value === "") {
                             this.dia.state = false;
                             this.dia.invalidFeedback = "informe a data de hoje";
+                            this.PontoTimePicker.methods.clear()
                         }
 
                         if (this.hora_chegada.value.HH === "" || this.hora_chegada.value.mm === "") {
                             this.hora_chegada.state = false;
                             this.hora_chegada.invalidFeedback = "informe a hora de chegada";
+
                         }
                         if (this.hora_chegada.value === "") {
                             this.hora_chegada.state = false;
@@ -176,5 +191,7 @@
         top: 100px;
         margin-left: 770px;
     }
-
+    body{
+        background-color: #eeeeee;
+    }
 </style>

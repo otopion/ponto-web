@@ -15,10 +15,10 @@ if (isProduction) {
 
 export default {
   namespaced: true,
-  state: initialState,
   modules: {
     acconts: require("./acconts").default
   },
+  state: initialState,
   actions,
   mutations,
   getters
