@@ -1,5 +1,5 @@
 export default {
-  getTurno(state) {
-    return state.turno
+  turno() {
+    return this.$store.state.ponto.turno.slice().reverse();
   }
 };

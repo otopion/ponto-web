@@ -33,7 +33,7 @@
                         <thead>
                         <tr>
                             <td>
-                                <ponto-date-picker ref="date" v-model="dia.value"/>
+                                <ponto-date-picker v-model="dia.value" disabled/>
                             </td>
                             <td>
                                 <ponto-time-picker ref="date" v-model="hora_chegada.value"/>
@@ -69,7 +69,6 @@
     import PontoTimePicker from "./PontoTimePicker";
     import GetTurno from "./GetTurno";
     import EditPonto from "./EditPonto";
-    import { mapActions } from 'vuex'
 
     export default {
         name: "Ponto",
@@ -119,9 +118,6 @@
 
         },
         methods: {
-            ...mapActions({
-                getTurno: 'getTurno'
-            }),
             async onSubmit() {
                 this.dia.invalidFeedback = "";
                 this.dia.state = null;
@@ -141,7 +137,7 @@
                 try {
                     await this.$store.dispatch("ponto/postTurno", data);
                     alert("inserido com sucesso!");
-                    this.hora_chegada.value = "";
+                    this.$store.dispatch("ponto/getTurno");
                 } catch ({response}) {
                     if (response.status === 400) {
 

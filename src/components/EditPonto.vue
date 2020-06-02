@@ -70,24 +70,24 @@
             fechar(){
                 document.getElementById('modall').style.top = "-100%";
             },
-            editar(){
-               const data = {
-                   data: this.editData,
-                   hora_chegada: this.editChegada.HH +":"+ this.editChegada.mm,
-                   hora_saida: this.editSaida.HH +":"+ this.editSaida.mm,
-                   saida_almoco: this.editSaida_almoco.HH +":"+ this.editSaida_almoco.mm,
-                   entrada_almoco: this.editEntrada_almoco.HH +":"+ this.editEntrada_almoco.mm,
-                   presente: this.editPresente,
-                   id_funcionario: this.edit.id_Funcionario,
-                   id: this.edit.id,
+            async editar() {
+                const data = {
+                    data: this.editData,
+                    hora_chegada: this.editChegada.HH + ":" + this.editChegada.mm,
+                    hora_saida: this.editSaida.HH + ":" + this.editSaida.mm,
+                    saida_almoco: this.editSaida_almoco.HH + ":" + this.editSaida_almoco.mm,
+                    entrada_almoco: this.editEntrada_almoco.HH + ":" + this.editEntrada_almoco.mm,
+                    presente: this.editPresente,
+                    id_funcionario: this.edit.id_Funcionario,
+                    id: this.edit.id,
                 };
 
-                try{
-                   if(confirm("os dados serão editados")) {
-                       this.$store.dispatch("ponto/editTurno", data)
-                   }
-                }
-                catch (e) {
+                try {
+                    if (confirm("os dados serão editados")) {
+                        await this.$store.dispatch("ponto/editTurno", data);
+                        this.$store.dispatch("ponto/getTurno");
+                    }
+                } catch (e) {
                     console.error("outer", e.message);
                 }
             }

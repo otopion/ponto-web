@@ -7,6 +7,7 @@ export const requireAuthenticated = (to, from, next) => {
         name: "login"
       });
     } else {
+      store.dispatch("ponto/getTurno");
       next();
     }
   });

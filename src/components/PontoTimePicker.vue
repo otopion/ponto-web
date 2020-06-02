@@ -19,12 +19,6 @@
             language() {
                 return ptBR;
             },
-            hour:{
-                get() {
-                    return this.$store.state.ponto.hour;
-                },
-
-            },
         },
         name: "PontoTimePicker",
         components:{

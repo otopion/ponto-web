@@ -1,7 +1,7 @@
 <template>
     <tbody>
     <tr v-for="(item, i ) in pageOfItems" :key="i">
-        <td>{{ item.data }}</td>
+        <td>{{ item.id }}</td>
         <td>{{ item.hora_chegada }}</td>
         <td>{{ item.hora_saida }}</td>
         <td>{{ item.saida_almoco }}</td>
@@ -64,38 +64,21 @@
 
             filter: function(){
                 return this.turno.filter((item) =>{
-                    return item.data.match(this.pesquisa.split('/').reverse().join('-'))
+                    return item.data.match(this.pesquisa.split('-').reverse().join('/'))
                 })
             },
-        },
-
-        mounted() {
-
-            let i = 0;
-            while(this.turno[i] != null) {
-                this.turno[i].data = this.turno[i].data.split('-').reverse().join('/');
-                i++;
-            }
-            let k = 0;
-            while(this.turno[k] != null){
-                if(this.turno[k].presente === true )
-                    this.turno[k].presente = "Presente";
-
-                if(this.turno[k].presente === false )
-                    this.turno[k].presente = "Ausente";
-                k++;
-            }
         },
         methods:{
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
                 window.scrollTo(0, 0);
             },
-           excluir(id) {
+            excluir(id) {
                 try {
                     this.delet = id;
                     if(confirm("Deseja mesmo excluir o item?")){
                         this.$store.dispatch("ponto/deleteTurno", this.delet);
+                        this.$store.dispatch("ponto/getTurno");
                     }
                 } catch (e) {
                      console.error("outer", e.message);
@@ -127,7 +110,7 @@
     }
     #pagenation{
         left: 30%;
-        width: 380px;
+        width: 500px;
         position: relative;
         margin-left: 125px;
     }

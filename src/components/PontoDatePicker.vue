@@ -8,6 +8,7 @@
         clear-button
         bootstrap-styling
         ref="myDatepicker"
+        v-model="value"
     />
 </template>
 

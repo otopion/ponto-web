@@ -5,8 +5,16 @@ export default {
         state.dia = data;
     },
     [types.SET_TURNO](state, data){
-        state.turno = data
-
+        state.turno = data;
+        for(let i = 0; state.turno[i] != null; i++) {
+            state.turno[i].data = state.turno[i].data.split('-').reverse().join('/');
+        }
+        for(let i=0; state.turno[i] != null; i++){
+            if(state.turno[i].presente === true )
+                state.turno[i].presente = "Presente";
+            if(state.turno[i].presente === false )
+                state.turno[i].presente = "Ausente";
+        }
     },
     [types.SET_PESQUISA](state, data){
         state.pesquisa = data
