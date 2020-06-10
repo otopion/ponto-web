@@ -4,11 +4,10 @@
         placeholder="Data"
         format="dd/MM/yyyy"
         :language="language"
+        :value="dateValue"
         clear-button-icon
         clear-button
         bootstrap-styling
-        ref="myDatepicker"
-        v-model="value"
     />
 </template>
 
@@ -16,6 +15,7 @@
 import DatePick from "vuejs-datepicker/dist/vuejs-datepicker";
 import ptBR from "vuejs-datepicker/dist/locale/translations/pt-BR";
 import formatISO from "date-fns/formatISO";
+import parseISO from "date-fns/parseISO";
 
 export default {
     name: "PontoDatePicker",
@@ -24,13 +24,18 @@ export default {
     },
     props: {
         value: {
-            type: String,
             required: true,
         },
     },
     computed: {
         language() {
             return ptBR;
+        },
+        dateValue() {
+            if (this.value === "") {
+                return null;
+            }
+            return parseISO(this.value);
         },
     },
     mounted() {

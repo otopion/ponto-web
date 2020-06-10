@@ -8,4 +8,3 @@ export const UPDATE_TURNO = "UPDATE_TURNO";
 export const SET_LOADING_TURNO = "SET_LOADING_TURNO";
 export const SET_HAS_CHANGES = "SET_HAS_CHANGES";
 export const SET_CHANGING_DATA = "SET_CHANGING_DATA";
-export const SET_HOUR = "SET_HOUR";

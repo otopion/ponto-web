@@ -15,24 +15,27 @@
                         <th scope="col">Horario de Saida</th>
                         <th scope="col">Saida para o almoço</th>
                         <th scope="col">Entrada do almoço</th>
-                        <th scope="col">Falta</th>
+                        <th scope="col">Presente</th>
                         <th scope="col">Opções</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td><ponto-date-picker v-model="editData" /> </td>
-                        <td><ponto-time-picker v-model="editChegada"/> </td>
-                        <td><ponto-time-picker v-model="editSaida"/></td>
-                        <td><ponto-time-picker v-model="editSaida_almoco" /></td>
-                        <td><ponto-time-picker v-model="editEntrada_almoco"/></td>
-                        <td><b-form-checkbox type="checkbox" v-model="editPresente" /></td>
+                        <td><ponto-date-picker  v-model="edit.data" /></td>
+                        <td><ponto-time-picker v-model="edit.hora_chegada" :disabled="!edit.presente" /> </td>
+                        <td><ponto-time-picker v-model="edit.hora_saida" :disabled="!edit.presente" /></td>
+                        <td><ponto-time-picker v-model="edit.saida_almoco" :disabled="!edit.presente" /></td>
+                        <td><ponto-time-picker v-model="edit.entrada_almoco" :disabled="!edit.presente" /></td>
+                        <td><b-form-checkbox @change="check" type="checkbox" v-model="edit.presente" /></td>
                         <th>
-                            <b-button id="button" @click="fechar()" type="submit" variant="outline-primary">Editar</b-button>
+                            <b-button id="buttonEdit"  type="submit" variant="outline-primary">Editar</b-button>
                         </th>
                     </tr>
                     </tbody>
                  </table>
+                    <div class="editErro">
+                        {{ erro }}
+                    </div>
                 </form>
             </div>
         </div>
@@ -47,50 +50,83 @@
         name: "EditPonto",
         components:{
             PontoDatePicker,
-            PontoTimePicker
+            PontoTimePicker,
         },
         data(){
           return{
-              editData: "",
-              editChegada: "",
-              editSaida: "",
-              editSaida_almoco: "",
-              editEntrada_almoco: "",
-              editPresente: false,
+              disabled: true,
+              erro: "",
           }
         },
         computed: {
             edit: {
+                set(value) {
+                    this.$store.dispatch("ponto/setEdit", value);
+                },
                 get() {
                     return this.$store.state.ponto.edit;
                 },
             },
         },
         methods:{
+            async check() {
+                if (this.edit.presente) {
+                    await this.limpaCampos();
+                    this.limpar();
+                }
+            },
+            limpaCampos(){
+                this.$store.state.ponto.edit.hora_chegada = "HH:mm";
+                this.$store.state.ponto.edit.hora_saida = "HH:mm";
+                this.$store.state.ponto.edit.saida_almoco = "HH:mm";
+                this.$store.state.ponto.edit.entrada_almoco  = "HH:mm";
+            },
+            limpar(){
+                this.$store.state.ponto.edit.data = "";
+                this.$store.state.ponto.edit.hora_chegada = "";
+                this.$store.state.ponto.edit.hora_saida = null;
+                this.$store.state.ponto.edit.saida_almoco = null;
+                this.$store.state.ponto.edit.entrada_almoco  = null;
+            },
             fechar(){
+                this.$store.state.ponto.edit.hora_chegada = "HH:mm";
+                this.$store.state.ponto.edit.hora_saida = "HH:mm";
+                this.$store.state.ponto.edit.saida_almoco = "HH:mm";
+                this.$store.state.ponto.edit.entrada_almoco = "HH:mm";
+                this.erro = "";
                 document.getElementById('modall').style.top = "-100%";
             },
             async editar() {
+                this.erro = "";
+
                 const data = {
-                    data: this.editData,
-                    hora_chegada: this.editChegada.HH + ":" + this.editChegada.mm,
-                    hora_saida: this.editSaida.HH + ":" + this.editSaida.mm,
-                    saida_almoco: this.editSaida_almoco.HH + ":" + this.editSaida_almoco.mm,
-                    entrada_almoco: this.editEntrada_almoco.HH + ":" + this.editEntrada_almoco.mm,
-                    presente: this.editPresente,
-                    id_funcionario: this.edit.id_Funcionario,
+                    data: this.edit.data,
+                    hora_chegada: this.edit.hora_chegada,
+                    hora_saida: this.edit.hora_saida,
+                    saida_almoco: this.edit.saida_almoco,
+                    entrada_almoco: this.edit.entrada_almoco,
+                    presente: this.edit.presente,
+                    id_funcionario: this.edit.id_funcionario,
                     id: this.edit.id,
                 };
 
                 try {
                     if (confirm("os dados serão editados")) {
                         await this.$store.dispatch("ponto/editTurno", data);
-                        this.$store.dispatch("ponto/getTurno");
+                        await this.$store.dispatch("ponto/getTurno");
+                        this.fechar();
                     }
-                } catch (e) {
-                    console.error("outer", e.message);
+                } catch ({response}) {
+                    if (response.status === 400) {
+                        if (this.edit.data === "") {
+                            this.erro = "informe a data de hoje";
+                        }
+                        if (!this.edit.hora_chegada && this.edit.presente) {
+                            this.erro = "informe a hora de chegada";
+                        }
+                    }
                 }
-            }
+            },
         }
     }
 </script>
@@ -129,5 +165,9 @@
     }
     #textEdit{
         margin-left: 40%;
+    }
+    .editErro{
+        margin-left: 40%;
+        color: red;
     }
 </style>

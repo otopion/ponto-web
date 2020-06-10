@@ -1,10 +1,10 @@
 <template>
-<div class="center font-weight-bold" v-onLoad="showTime()">
+<div class="center font-weight-bold">
     <div class="name">
         <h2><span v-if="isAuthenticated">{{ user.first_name }}</span></h2>
     </div>
     <div class="data">
-        <h3>{{ data }}</h3>
+        <h3 >{{ data }}</h3>
     </div>
     <div class="hora">
         <h4>{{ hora }}</h4>
@@ -15,7 +15,12 @@
 <script>
 export default {
   name: "Home",
-  props:["hora","data"],
+    data(){
+      return{
+          hora: "",
+          data: ""
+      }
+    },
     methods:{
       showTime(){
           let dayName = new Array ("domingo", "segunda", "terça", "quarta", "quinta", "sexta", "sábado")
@@ -24,12 +29,13 @@ export default {
           this.hora = ((new Date).toLocaleString().substr(11, 8,));
           let date = new Date();
           this.data = dayName[date.getDay() ]+", "+date.getDate()+" de "+monName[date.getMonth()]+" de "+date.getFullYear();
-            },
+      },
     },
     mounted() {
       setInterval(() => {
             this.hora = ((new Date).toLocaleString().substr(11, 8,));
-        }, 1000)
+        }, 1000);
+        this.showTime();
     },
 
         computed: {

@@ -1,12 +1,16 @@
 <template>
     <tbody>
     <tr v-for="(item, i ) in pageOfItems" :key="i">
-        <td>{{ item.id }}</td>
-        <td>{{ item.hora_chegada }}</td>
-        <td>{{ item.hora_saida }}</td>
-        <td>{{ item.saida_almoco }}</td>
-        <td>{{ item.entrada_almoco }}</td>
-        <td>{{ item.presente }}</td>
+        <td>{{ item.data }}</td>
+        <td v-if="item.hora_chegada">{{ item.hora_chegada }}</td>
+        <td v-else>{{ traco }}</td>
+        <td v-if="item.hora_saida">{{ item.hora_saida }}</td>
+        <td v-else>{{ traco }}</td>
+        <td v-if="item.saida_almoco">{{ item.saida_almoco }}</td>
+        <td v-else>{{ traco }}</td>
+        <td v-if="item.entrada_almoco">{{ item.entrada_almoco }}</td>
+        <td v-else>{{ traco }}</td>
+        <td v-if="item.presente">{{ item.presente }}</td>
         <td>
             <b-button class="op" @click="abrir(item)" variant="primary"><b-icon class="icon" icon="pencil-square"/> </b-button>
             <b-button @click="excluir(item.id)" class="op" variant="danger"><b-icon class="icon" icon="trash"/></b-button>
@@ -21,6 +25,8 @@
 <script>
     import  'bootstrap-vue/dist/bootstrap-vue-icons.min.css';
     import JwPagination from 'jw-vue-pagination';
+    import { mapActions } from "vuex";
+
     export default {
         name: "GetTurno",
         components:{
@@ -30,6 +36,7 @@
             return{
                 item: [],
                 pageOfItems: [],
+                traco: "- - - - - - - -"
             }
         },
         computed:{
@@ -68,26 +75,32 @@
                 })
             },
         },
+        mounted() {
+
+        },
         methods:{
+            ...mapActions(["abrirEdit"]),
+
             onChangePage(pageOfItems) {
                 this.pageOfItems = pageOfItems;
                 window.scrollTo(0, 0);
             },
-            excluir(id) {
+            async excluir(id) {
                 try {
                     this.delet = id;
-                    if(confirm("Deseja mesmo excluir o item?")){
-                        this.$store.dispatch("ponto/deleteTurno", this.delet);
-                        this.$store.dispatch("ponto/getTurno");
+                    if(confirm("os dados seram excluidos")) {
+                        await this.$store.dispatch("ponto/deleteTurno", this.delet);
+                        await this.$store.dispatch("ponto/getTurno");
                     }
                 } catch (e) {
-                     console.error("outer", e.message);
+                    console.error("outer", e.message);
                 }
             },
-            abrir(item){
-              document.getElementById('modall').style.top = "0";
-              this.edit = item;
+            async abrir(item) {
+                await this.$store.dispatch("ponto/abrirEdit", item);
+                document.getElementById('modall').style.top = "0";
             },
+
         },
     }
 </script>
@@ -109,9 +122,9 @@
         margin-left: 10px;
     }
     #pagenation{
-        left: 30%;
-        width: 500px;
+        left: 25%;
+        width: 550px;
         position: relative;
-        margin-left: 125px;
+        margin-left: 100px;
     }
 </style>

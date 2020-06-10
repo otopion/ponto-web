@@ -10,8 +10,8 @@ class Turno(models.Model):
     hora_chegada = models.TimeField(null=True)
     hora_saida = models.TimeField(null=True)
 
-    saida_almoco = models.TimeField()
-    entrada_almoco = models.TimeField()
+    saida_almoco = models.TimeField(null=True)
+    entrada_almoco = models.TimeField(null=True)
 
     presente = models.BooleanField()
 

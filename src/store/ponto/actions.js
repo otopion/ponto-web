@@ -11,11 +11,8 @@ export default {
     setDelete({ commit }, data){
       commit(types.DELETE_TURNO, data)
     },
-    setEdit({ commit }, data){
-      commit(types.SET_EDIT, data)
-    },
-    setHour({ commit }, data){
-      commit(types.SET_HOUR, data)
+    abrirEdit({ commit }, item){
+        commit(types.SET_EDIT, item)
     },
     getTurno({ commit }){
         commit(types.SET_LOADING_TURNO, true);

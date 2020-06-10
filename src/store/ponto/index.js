@@ -3,16 +3,23 @@ import getters from "./getters"
 import mutations from "./mutations";
 
 const initialState = {
-    dia: "",
     turno: [],
     pesquisa: "",
     delete: "",
     deleto: false,
-    edit: null,
+    edit: {
+        data: "",
+        hora_chegada: null,
+        hora_saida: null,
+        saida_almoco: null,
+        entrada_almoco: null,
+        presente: false,
+        id_funcionario: null,
+        id: null,
+    },
     loadingTurno: false,
     hasChanges: false,
     changingData: false,
-    hour: "",
 };
 
 export default {

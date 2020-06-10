@@ -4,8 +4,9 @@
             @input="onInput"
             class="time"
             auto-scroll
+            :disabled="disabled"
+            :value="value"
             manual-input
-            ref="time"
     />
 </template>
 
@@ -13,36 +14,45 @@
     import 'vue2-timepicker/dist/VueTimepicker.css'
     import VueTimepicker from 'vue2-timepicker'
     import ptBR from "vuejs-datepicker/dist/locale/translations/pt-BR";
+    import moment from 'moment';
 
     export default {
+        name: "PontoTimePicker",
+        components:{
+            VueTimepicker
+        },
         computed: {
             language() {
                 return ptBR;
             },
         },
-        name: "PontoTimePicker",
-        components:{
-            VueTimepicker
-        },
         props: {
             value: {
-                type: String,
                 required: true
-            }
+            },
+            disabled: {
+                type: Boolean,
+                default: false
+            },
         },
         methods: {
-        onInput(value) {
-            this.$emit("input", value);
-        },
-        clear(){
-            this.$emit('input')
+            onInput(value) {
+                if (value) {
+                    value = moment(value, 'HH:mm').format('HH:mm');
+                } else {
+                    value = null;
+                }
+                this.$emit("input", value);
+            },
         }
-    }
     }
 </script>
 
-<style scoped>
+<style>
     .time{
         width: 140px;
+    }
+    .vue__time-picker .clear-btn{
+        left: 130px;
     }
 </style>

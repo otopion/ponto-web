@@ -3,10 +3,10 @@
         <div class="config">
             <h2>Ponto</h2>
         </div>
-        <div class="erro" v-if="dia.value===''">
-            {{ dia.invalidFeedback }}
+        <div class="erro" v-if="data.value===''">
+            {{ data.invalidFeedback }}
         </div>
-        <div class="erro" v-if="dia.value!==''">
+        <div class="erro" v-if="data.value!==''">
             {{ hora_chegada.invalidFeedback }}
         </div>
         <div class="lupa">
@@ -33,22 +33,22 @@
                         <thead>
                         <tr>
                             <td>
-                                <ponto-date-picker v-model="dia.value" disabled/>
+                                <ponto-date-picker v-model="data.value" />
                             </td>
                             <td>
-                                <ponto-time-picker ref="date" v-model="hora_chegada.value"/>
+                                <ponto-time-picker v-model="hora_chegada.value" :disabled="disabled"/>
                             </td>
                             <td>
-                                <ponto-time-picker v-model="hora_saida"/>
+                                <ponto-time-picker v-model="hora_saida" :disabled="disabled"/>
                             </td>
                             <td>
-                                <ponto-time-picker v-model="saida_almoco"/>
+                                <ponto-time-picker v-model="saida_almoco" :disabled="disabled"/>
                             </td>
                             <td>
-                                <ponto-time-picker v-model="entra_almoco"/>
+                                <ponto-time-picker v-model="entrada_almoco" :disabled="disabled"/>
                             </td>
                             <td>
-                                <b-form-checkbox id="check" type="checkbox" v-model="falta"/>
+                                <b-form-checkbox @change="check" id="check" type="checkbox" v-model="presente"/>
                             </td>
                             <th>
                                 <b-button id="button" type="submit" variant="outline-primary">Enviar</b-button>
@@ -58,6 +58,7 @@
                         <get-turno/>
                     </table>
                 </b-form>
+                {{ hora_saida }}
             </main>
             <edit-ponto/>
         </div>
@@ -85,20 +86,18 @@
             pesquisa: {
                 set(value) {
                     this.$store.dispatch("ponto/setPesquisa", value);
-                }
+                },
+                get() {
+                    return this.$store.state.ponto.pesquisa;
+                },
             },
             turno() {
                  return this.$store.state.ponto.turno.slice().reverse();
             },
-            hour: {
-                set(value) {
-                    this.$store.dispatch("ponto/setHour", value);
-                },
-            }
         },
         data() {
             return {
-                dia: {
+                data: {
                     state: null,
                     value: "",
                     invalidFeedback: ""
@@ -106,53 +105,69 @@
                 hora_chegada: {
                     state: null,
                     value: "",
-                    invalidFeedback: ""
+                    invalidFeedback: "",
                 },
-                hora_saida: "",
-                saida_almoco: "",
-                entra_almoco: "",
-                falta: false,
+                hora_saida: null,
+                saida_almoco: null,
+                entrada_almoco: null,
+                presente: false,
+                disabled: true
             }
         },
-        mounted() {
-
-        },
         methods: {
+            async check() {
+                this.disabled = this.presente;
+                if (this.disabled) {
+                    await this.limpaCampos();
+                    this.limpar();
+                }
+            },
+            limpaCampos(){
+                this.hora_chegada.value = "HH:mm";
+                this.hora_saida = "HH:mm";
+                this.saida_almoco = "HH:mm";
+                this.entrada_almoco  = "HH:mm";
+            },
+            limpar(){
+                this.data.value = "";
+                this.hora_chegada.value = "";
+                this.hora_saida = null;
+                this.saida_almoco = null;
+                this.entrada_almoco  = null;
+            },
             async onSubmit() {
-                this.dia.invalidFeedback = "";
-                this.dia.state = null;
+                this.data.invalidFeedback = "";
+                this.data.state = null;
                 this.hora_chegada.invalidFeedback = "";
                 this.hora_chegada.state = null;
+                if (this.hora_chegada.value === "" && !this.presente)
+                        this.hora_chegada.value = null;
+                if (this.hora_chegada.value === null && this.presente)
+                        this.hora_chegada.value = "";
 
                 const data = {
-                    data: this.dia.value,
-                    hora_chegada: this.hora_chegada.value.HH + ":" + this.hora_chegada.value.mm,
-                    hora_saida: this.hora_saida.HH + ":" + this.hora_saida.mm,
-                    saida_almoco: this.saida_almoco.HH + ":" + this.saida_almoco.mm,
-                    entrada_almoco: this.entra_almoco.HH + ":" + this.entra_almoco.mm,
-                    presente: this.falta,
+                    data: this.data.value,
+                    hora_chegada: this.hora_chegada.value,
+                    hora_saida: this.hora_saida,
+                    saida_almoco: this.saida_almoco,
+                    entrada_almoco: this.entrada_almoco,
+                    presente: this.presente,
                     id_funcionario: this.funcionario[0].id
                 };
 
                 try {
                     await this.$store.dispatch("ponto/postTurno", data);
                     alert("inserido com sucesso!");
-                    this.$store.dispatch("ponto/getTurno");
+                    await this.limpaCampos();
+                    this.limpar();
+                    await this.$store.dispatch("ponto/getTurno");
                 } catch ({response}) {
                     if (response.status === 400) {
-
-                        if (this.dia.value === "") {
-                            this.dia.state = false;
-                            this.dia.invalidFeedback = "informe a data de hoje";
-                            this.PontoTimePicker.methods.clear()
+                        if (this.data.value === "") {
+                            this.data.state = false;
+                            this.data.invalidFeedback = "informe a data de hoje";
                         }
-
-                        if (this.hora_chegada.value.HH === "" || this.hora_chegada.value.mm === "") {
-                            this.hora_chegada.state = false;
-                            this.hora_chegada.invalidFeedback = "informe a hora de chegada";
-
-                        }
-                        if (this.hora_chegada.value === "") {
+                        if (!this.hora_chegada.value && this.presente) {
                             this.hora_chegada.state = false;
                             this.hora_chegada.invalidFeedback = "informe a hora de chegada";
                         }
@@ -179,13 +194,13 @@
     .pesquisa {
         position: absolute;
         top: 95px;
-        margin-left: 800px;
+        margin-left: 780px;
     }
 
     .lupa {
         position: absolute;
         top: 100px;
-        margin-left: 770px;
+        margin-left: 750px;
     }
     body{
         background-color: #eeeeee;

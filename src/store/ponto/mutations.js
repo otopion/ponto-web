@@ -1,4 +1,5 @@
 import * as types from "./types";
+import moment from 'moment';
 
 export default {
     [types.SET_DIA](state, data){
@@ -25,8 +26,15 @@ export default {
     [types.DELETO](state, data){
         state.deleto = data
     },
-    [types.SET_EDIT](state, data){
-        state.edit = data
+    [types.SET_EDIT](state, item){
+        state.edit.data = item.data.split('/').reverse().join('-');
+        state.edit.hora_chegada = moment(item.hora_chegada, 'HH:mm').format('HH:mm');
+        state.edit.hora_saida = moment(item.hora_saida, 'HH:mm').format('HH:mm');
+        state.edit.saida_almoco = moment(item.saida_almoco, 'HH:mm').format('HH:mm');
+        state.edit.entrada_almoco = moment(item.entrada_almoco, 'HH:mm').format('HH:mm');
+        state.edit.presente = item.presente !== "Ausente";
+        state.edit.id_funcionario = item.id_Funcionario;
+        state.edit.id = item.id;
     },
     [types.UPDATE_TURNO](state, turno){
         state.turno = state.turno + turno;
@@ -39,8 +47,5 @@ export default {
     },
     [types.SET_CHANGING_DATA](state, value) {
          state.changingData = value;
-    },
-    [types.SET_HOUR](state, value){
-        state.hour = value;
     },
 }
