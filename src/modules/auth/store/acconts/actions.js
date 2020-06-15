@@ -26,9 +26,9 @@ export default {
                 .setHorario(hora_chegada, hora_saida, user)
     },
     setChegada({ commit }, date) {
-    commit(SET_CHEGADA, date);
+        commit(SET_CHEGADA, date);
     },
     setSaida({ commit }, date) {
-    commit(SET_SAIDA, date);
+        commit(SET_SAIDA, date);
   },
 }

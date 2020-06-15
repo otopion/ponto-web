@@ -107,9 +107,9 @@
                     value: "",
                     invalidFeedback: "",
                 },
-                hora_saida: null,
-                saida_almoco: null,
-                entrada_almoco: null,
+                hora_saida: "",
+                saida_almoco: "",
+                entrada_almoco: "",
                 presente: false,
                 disabled: true
             }
@@ -144,6 +144,13 @@
                         this.hora_chegada.value = null;
                 if (this.hora_chegada.value === null && this.presente)
                         this.hora_chegada.value = "";
+
+                if(this.hora_saida==="")
+                    this.hora_saida=null;
+                if(this.entrada_almoco==="")
+                    this.entrada_almoco=null;
+                if(this.saida_almoco==="")
+                    this.saida_almoco=null;
 
                 const data = {
                     data: this.data.value,

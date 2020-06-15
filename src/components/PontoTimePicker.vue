@@ -28,7 +28,7 @@
         },
         props: {
             value: {
-                required: true
+              required: true,
             },
             disabled: {
                 type: Boolean,
@@ -40,7 +40,7 @@
                 if (value) {
                     value = moment(value, 'HH:mm').format('HH:mm');
                 } else {
-                    value = null;
+                    value = "";
                 }
                 this.$emit("input", value);
             },

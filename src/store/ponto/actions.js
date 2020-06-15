@@ -6,13 +6,19 @@ export default {
         commit(types.SET_DIA, data);
     },
     setPesquisa({ commit }, data){
-        commit(types.SET_PESQUISA, data)
+        commit(types.SET_PESQUISA, data);
     },
     setDelete({ commit }, data){
-      commit(types.DELETE_TURNO, data)
+      commit(types.DELETE_TURNO, data);
     },
     abrirEdit({ commit }, item){
-        commit(types.SET_EDIT, item)
+        commit(types.SET_EDIT, item);
+    },
+    limpaCamposEdit({ commit }){
+        commit(types.LIMPA_CAMPOS_EDIT);
+    },
+    limpaDadosEdit({ commit }){
+        commit(types.LIMPA_DADOS_EDIT);
     },
     getTurno({ commit }){
         commit(types.SET_LOADING_TURNO, true);
@@ -37,9 +43,11 @@ export default {
                     }, 1000)
       );
     },
-    // eslint-disable-next-line no-unused-vars
     editTurno({ commit }, { data, hora_chegada, hora_saida, saida_almoco, entrada_almoco, presente, id_funcionario, id }){
         return ponto
             .editTurno(data, hora_chegada, hora_saida, saida_almoco, entrada_almoco, presente, id_funcionario, id)
+            .then(() => {
+                commit(types.LIMPA_CAMPOS_EDIT, types.LIMPA_DADOS_EDIT);
+            })
     },
 }

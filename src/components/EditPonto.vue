@@ -20,7 +20,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
+                    <tr >
                         <td><ponto-date-picker  v-model="edit.data" /></td>
                         <td><ponto-time-picker v-model="edit.hora_chegada" :disabled="!edit.presente" /> </td>
                         <td><ponto-time-picker v-model="edit.hora_saida" :disabled="!edit.presente" /></td>
@@ -34,7 +34,7 @@
                     </tbody>
                  </table>
                     <div class="editErro">
-                        {{ erro }}
+                        {{ editHora_chegada }}
                     </div>
                 </form>
             </div>
@@ -55,7 +55,11 @@
         data(){
           return{
               disabled: true,
-              erro: "",
+              editHora_chegada: null,
+              erro: {
+                  state: null,
+                  invalidFeedback: "",
+              },
           }
         },
         computed: {
@@ -72,32 +76,35 @@
             async check() {
                 if (this.edit.presente) {
                     await this.limpaCampos();
-                    this.limpar();
+                    this.limpaDados();
                 }
             },
             limpaCampos(){
-                this.$store.state.ponto.edit.hora_chegada = "HH:mm";
-                this.$store.state.ponto.edit.hora_saida = "HH:mm";
-                this.$store.state.ponto.edit.saida_almoco = "HH:mm";
-                this.$store.state.ponto.edit.entrada_almoco  = "HH:mm";
+                this.$store.dispatch("ponto/limpaCamposEdit");
             },
-            limpar(){
-                this.$store.state.ponto.edit.data = "";
-                this.$store.state.ponto.edit.hora_chegada = "";
-                this.$store.state.ponto.edit.hora_saida = null;
-                this.$store.state.ponto.edit.saida_almoco = null;
-                this.$store.state.ponto.edit.entrada_almoco  = null;
+            limpaDados(){
+                this.$store.dispatch("ponto/limpaDadosEdit");
             },
             fechar(){
-                this.$store.state.ponto.edit.hora_chegada = "HH:mm";
-                this.$store.state.ponto.edit.hora_saida = "HH:mm";
-                this.$store.state.ponto.edit.saida_almoco = "HH:mm";
-                this.$store.state.ponto.edit.entrada_almoco = "HH:mm";
-                this.erro = "";
+                this.limpaCampos();
+                this.erro.invalidFeedback = "";
                 document.getElementById('modall').style.top = "-100%";
             },
             async editar() {
-                this.erro = "";
+                this.erro.invalidFeedback = "";
+                this.erro.state = null;
+
+                if (this.edit.hora_chegada === "" && !this.edit.presente)
+                        this.edit.hora_chegada = null;
+                if (this.edit.hora_chegada === null && this.edit.presente)
+                        this.edit.hora_chegada = "";
+
+                if(this.edit.hora_saida==="")
+                    this.edit.hora_saida=null;
+                if(this.edit.entrada_almoco==="")
+                    this.edit.entrada_almoco=null;
+                if(this.edit.saida_almoco==="")
+                    this.edit.saida_almoco=null;
 
                 const data = {
                     data: this.edit.data,
@@ -119,10 +126,11 @@
                 } catch ({response}) {
                     if (response.status === 400) {
                         if (this.edit.data === "") {
-                            this.erro = "informe a data de hoje";
+                            this.erro.invalidFeedback = "informe a data de hoje";
                         }
                         if (!this.edit.hora_chegada && this.edit.presente) {
-                            this.erro = "informe a hora de chegada";
+                            this.erro.state = false;
+                            this.erro.invalidFeedback = "informe a hora de chegada";
                         }
                     }
                 }

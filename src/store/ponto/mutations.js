@@ -23,9 +23,6 @@ export default {
     [types.DELETE_TURNO](state, data){
         state.delete = data
     },
-    [types.DELETO](state, data){
-        state.deleto = data
-    },
     [types.SET_EDIT](state, item){
         state.edit.data = item.data.split('/').reverse().join('-');
         state.edit.hora_chegada = moment(item.hora_chegada, 'HH:mm').format('HH:mm');
@@ -36,9 +33,6 @@ export default {
         state.edit.id_funcionario = item.id_Funcionario;
         state.edit.id = item.id;
     },
-    [types.UPDATE_TURNO](state, turno){
-        state.turno = state.turno + turno;
-    },
     [types.SET_LOADING_TURNO](state, loading){
         state.loadingTurno = loading;
     },
@@ -48,4 +42,18 @@ export default {
     [types.SET_CHANGING_DATA](state, value) {
          state.changingData = value;
     },
+    [types.LIMPA_CAMPOS_EDIT](state){
+        state.edit.hora_chegada = "HH:mm";
+        state.edit.hora_saida = "HH:mm";
+        state.edit.saida_almoco = "HH:mm";
+        state.edit.entrada_almoco  = "HH:mm";
+    },
+    [types.LIMPA_DADOS_EDIT](state){
+        state.edit.data = "";
+        state.hora_chegada = "";
+        state.edit.hora_saida = null;
+        state.edit.saida_almoco = null;
+        state.edit.entrada_almoco  = null;
+        state.edit.presente = false;
+    }
 }

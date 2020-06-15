@@ -76,19 +76,17 @@
             >
             </b-form-group>
       </div>
-
         <div class="col-lg-6">
           <ponto-time-picker
             v-model="hora_saida"
              />
-            <label>Hora de saída</label>
+            <br><label>Hora de saída</label>
             <b-form-group
               :invalid-feedback="erro_saida.invalidFeedback"
               :state="erro_saida.state"
             >
             </b-form-group>
       </div>
-
 
         </div>
 
@@ -198,6 +196,9 @@
                 this.erro_saida.state = null;
                 this.erro_saida.invalidFeedback = "";
 
+                if(!this.hora_chegada || !this.hora_saida)
+                    this.password.value = "";
+
                 const data = {
                     username: this.username.value,
                     email: this.email.value,
@@ -206,17 +207,17 @@
                     password: this.password.value,
                 };
 
-
-
                 try {
+
                     await this.$store.dispatch("auth/cadastrar", data);
                     await this.$store.dispatch("auth/getLastUser");
 
                     const hour = {
-                        hora_chegada: this.hora_chegada.HH +":"+ this.hora_chegada.mm,
-                        hora_saida: this.hora_saida.HH +":"+ this.hora_saida.mm,
+                        hora_chegada: this.hora_chegada,
+                        hora_saida: this.hora_saida,
                         user: this.lastUser.id,
                     };
+
 
                     await this.$store.dispatch("auth/setHorario", hour);
 
@@ -233,6 +234,11 @@
                     if (this.username.value.length < 4) {
                         this.username.state = false;
                         this.username.invalidFeedback = "Certifique-se de que este campo tenha mais de 4 caracteres."
+                    }
+                    if(this.password.value.length < 4)
+                    {
+                        this.password.state = false;
+                        this.password.invalidFeedback = "Certifique-se de que este campo tenha mais de 4 caracteres."
                     }
 
                     if ("username" in data) {
@@ -264,18 +270,22 @@
                         this.password.state = false;
                         this.password.invalidFeedback = data.password[0];
                     }
+                    if (this.password.value==="#") {
+                        this.password.state = null;
+                        this.password.value = "";
+                    }
 
                     if ("non_field_errors" in data) {
                         this.nonFieldErrorMessage = data.non_field_errors[0];
                         this.password.value = "";
                     }
 
-                    if(!this.hora_chegada.HH || !this.hora_chegada.mm){
+                    if(!this.hora_chegada){
                         this.erro_chegada.state = false;
                         this.erro_chegada.invalidFeedback = "Este campo não pode ser em branco";
                     }
 
-                    if(!this.hora_saida.HH || !this.hora_saida.mm){
+                    if(!this.hora_saida){
                         this.erro_saida.state = false;
                         this.erro_saida.invalidFeedback = "Este campo não pode ser em branco";
                     }
@@ -394,6 +404,11 @@
     margin-top: 30px;
     text-align: center;
     font-size: 13px;
+}
+
+.vue__time-picker .clear-btn{
+    left: 130px;
+    margin-top: 20px;
 }
 
 @media (max-width: 575px){
