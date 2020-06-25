@@ -34,7 +34,7 @@
                     </tbody>
                  </table>
                     <div class="editErro">
-                        {{ editHora_chegada }}
+                        {{ erro.invalidFeedback }}
                     </div>
                 </form>
             </div>
@@ -55,7 +55,10 @@
         data(){
           return{
               disabled: true,
-              editHora_chegada: null,
+              editChegada: "",
+              editSaida: "",
+              editSaida_almoco: "",
+              editEntrada_almoco: "",
               erro: {
                   state: null,
                   invalidFeedback: "",
@@ -85,8 +88,9 @@
             limpaDados(){
                 this.$store.dispatch("ponto/limpaDadosEdit");
             },
-            fechar(){
-                this.limpaCampos();
+            async fechar() {
+                await this.limpaCampos();
+                this.limpaDados();
                 this.erro.invalidFeedback = "";
                 document.getElementById('modall').style.top = "-100%";
             },
@@ -99,13 +103,6 @@
                 if (this.edit.hora_chegada === null && this.edit.presente)
                         this.edit.hora_chegada = "";
 
-                if(this.edit.hora_saida==="")
-                    this.edit.hora_saida=null;
-                if(this.edit.entrada_almoco==="")
-                    this.edit.entrada_almoco=null;
-                if(this.edit.saida_almoco==="")
-                    this.edit.saida_almoco=null;
-
                 const data = {
                     data: this.edit.data,
                     hora_chegada: this.edit.hora_chegada,
@@ -116,6 +113,13 @@
                     id_funcionario: this.edit.id_funcionario,
                     id: this.edit.id,
                 };
+
+                if(data.hora_saida==="")
+                    data.hora_saida=null;
+                if(data.entrada_almoco==="")
+                    data.entrada_almoco=null;
+                if(data.saida_almoco==="")
+                    data.saida_almoco=null;
 
                 try {
                     if (confirm("os dados serão editados")) {

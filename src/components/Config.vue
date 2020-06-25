@@ -9,7 +9,7 @@
       <thead class="thead-light">
         <tr>
           <th scope="col">Nome</th>
-          <th scope="col">Segundo Nome</th>
+          <th scope="col">Sobre nome</th>
           <th scope="col">Email</th>
         </tr>
       </thead>

@@ -1,6 +1,7 @@
 from django.urls import path
 from ponto.tasks import views
 
+app_name = 'tasks'
 urlpatterns = [
     path('turno-management/', views.turno_ma, name='turno-management'),
     path('turno-management/<int:pk>/', views.turno_ma, name='turno-management'),

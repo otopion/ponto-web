@@ -1,7 +1,7 @@
 from django.urls import path
 from ponto.acconts import views
 
-app_name = 'auth'
+app_name = 'acconts'
 urlpatterns = [
-    path('cadastrar/', views.cadastar, name='cadastrar'),
+    path('cadastrar/', views.cadastrar, name='cadastrar'),
 ]

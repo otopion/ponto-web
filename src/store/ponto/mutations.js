@@ -25,10 +25,22 @@ export default {
     },
     [types.SET_EDIT](state, item){
         state.edit.data = item.data.split('/').reverse().join('-');
-        state.edit.hora_chegada = moment(item.hora_chegada, 'HH:mm').format('HH:mm');
-        state.edit.hora_saida = moment(item.hora_saida, 'HH:mm').format('HH:mm');
-        state.edit.saida_almoco = moment(item.saida_almoco, 'HH:mm').format('HH:mm');
-        state.edit.entrada_almoco = moment(item.entrada_almoco, 'HH:mm').format('HH:mm');
+        if(!item.hora_chegada)
+            state.hora_chegada = item.hora_chegada;
+        else
+            state.edit.hora_chegada = moment(item.hora_chegada, 'HH:mm').format('HH:mm');
+        if(!item.hora_saida)
+            state.hora_saida = item.hora_saida;
+        else
+            state.edit.hora_saida = moment(item.hora_saida, 'HH:mm').format('HH:mm');
+        if(!item.saida_almoco)
+            state.saida_almoco = item.saida_almoco;
+        else
+            state.edit.saida_almoco = moment(item.saida_almoco, 'HH:mm').format('HH:mm');
+        if(!item.entrada_almoco)
+            state.entrada_almoco = item.entrada_almoco;
+        else
+            state.edit.entrada_almoco = moment(item.entrada_almoco, 'HH:mm').format('HH:mm');
         state.edit.presente = item.presente !== "Ausente";
         state.edit.id_funcionario = item.id_Funcionario;
         state.edit.id = item.id;
@@ -51,9 +63,9 @@ export default {
     [types.LIMPA_DADOS_EDIT](state){
         state.edit.data = "";
         state.hora_chegada = "";
-        state.edit.hora_saida = null;
-        state.edit.saida_almoco = null;
-        state.edit.entrada_almoco  = null;
+        state.edit.hora_saida = "";
+        state.edit.saida_almoco = "";
+        state.edit.entrada_almoco  = "";
         state.edit.presente = false;
     }
 }

@@ -8,7 +8,7 @@ class CadastrarView(ModelViewSet):
     serializer_class = CadastrarSerializer
 
 
-cadastar = CadastrarView.as_view({
+cadastrar = CadastrarView.as_view({
     'post': 'create',
     'put': 'update',
     'delete': 'destroy',
