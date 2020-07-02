@@ -98,11 +98,6 @@
                 this.erro.invalidFeedback = "";
                 this.erro.state = null;
 
-                if (this.edit.hora_chegada === "" && !this.edit.presente)
-                        this.edit.hora_chegada = null;
-                if (this.edit.hora_chegada === null && this.edit.presente)
-                        this.edit.hora_chegada = "";
-
                 const data = {
                     data: this.edit.data,
                     hora_chegada: this.edit.hora_chegada,
@@ -114,6 +109,8 @@
                     id: this.edit.id,
                 };
 
+                if(data.hora_chegada==="")
+                    data.hora_chegada=null;
                 if(data.hora_saida==="")
                     data.hora_saida=null;
                 if(data.entrada_almoco==="")
@@ -129,12 +126,14 @@
                     }
                 } catch ({response}) {
                     if (response.status === 400) {
+                        const { data } = response;
+
                         if (this.edit.data === "") {
                             this.erro.invalidFeedback = "informe a data de hoje";
                         }
                         if (!this.edit.hora_chegada && this.edit.presente) {
                             this.erro.state = false;
-                            this.erro.invalidFeedback = "informe a hora de chegada";
+                            this.erro.invalidFeedback = data.presente[0];
                         }
                     }
                 }

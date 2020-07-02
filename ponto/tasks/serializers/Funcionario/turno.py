@@ -15,3 +15,13 @@ class TurnoSerializer(serializers.ModelSerializer):
             "presente",
             "id_Funcionario",
         ]
+
+    def validate_presente(self, value):
+        data = self.get_initial()
+        presente = data.get("hora_chegada")
+
+        if value is True and presente is None:
+            raise serializers.ValidationError("insira a hora de chegada")
+
+        return value
+

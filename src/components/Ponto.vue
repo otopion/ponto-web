@@ -119,7 +119,7 @@
                 this.disabled = this.presente;
                 if (this.disabled) {
                     await this.limpaCampos();
-                    this.limpar();
+                    this.limpaDados();
                 }
             },
             limpaCampos(){
@@ -128,7 +128,7 @@
                 this.saida_almoco = "HH:mm";
                 this.entrada_almoco  = "HH:mm";
             },
-            limpar(){
+            limpaDados(){
                 this.data.value = "";
                 this.hora_chegada.value = "";
                 this.hora_saida = null;
@@ -140,11 +140,9 @@
                 this.data.state = null;
                 this.hora_chegada.invalidFeedback = "";
                 this.hora_chegada.state = null;
-                if (this.hora_chegada.value === "" && !this.presente)
-                        this.hora_chegada.value = null;
-                if (this.hora_chegada.value === null && this.presente)
-                        this.hora_chegada.value = "";
 
+                if(this.hora_chegada.value==="")
+                    this.hora_chegada.value=null;
                 if(this.hora_saida==="")
                     this.hora_saida=null;
                 if(this.entrada_almoco==="")
@@ -166,17 +164,19 @@
                     await this.$store.dispatch("ponto/postTurno", data);
                     alert("inserido com sucesso!");
                     await this.limpaCampos();
-                    this.limpar();
+                    this.limpaDados();
                     await this.$store.dispatch("ponto/getTurno");
                 } catch ({response}) {
                     if (response.status === 400) {
+                        const { data } = response;
+
                         if (this.data.value === "") {
                             this.data.state = false;
                             this.data.invalidFeedback = "informe a data de hoje";
                         }
                         if (!this.hora_chegada.value && this.presente) {
                             this.hora_chegada.state = false;
-                            this.hora_chegada.invalidFeedback = "informe a hora de chegada";
+                            this.hora_chegada.invalidFeedback = data.presente[0];
                         }
                     }
                 }

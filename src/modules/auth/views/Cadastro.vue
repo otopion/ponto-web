@@ -3,6 +3,15 @@
         <div id="login-form">
     <b-form @submit.prevent="onSubmit">
       <h1>Cadastrar</h1>
+        <div class="mensagem">
+            <b-alert
+                    :show="!!nonFieldErrorMessage"
+                    variant="danger"
+                    style="margin-left: 60px; margin-right: 60px"
+            >
+                {{ nonFieldErrorMessage }}
+            </b-alert>
+        </div>
         <div class="row">
       <div class="col-lg-6">
           <b-form-group
@@ -231,16 +240,6 @@
                 if (response.status === 400) {
                     const { data } = response;
 
-                    if (this.username.value.length < 4) {
-                        this.username.state = false;
-                        this.username.invalidFeedback = "Certifique-se de que este campo tenha mais de 4 caracteres."
-                    }
-                    if(this.password.value.length < 4)
-                    {
-                        this.password.state = false;
-                        this.password.invalidFeedback = "Certifique-se de que este campo tenha mais de 4 caracteres."
-                    }
-
                     if ("username" in data) {
                         this.username.state = false;
                         this.username.invalidFeedback = data.username[0];
@@ -251,9 +250,14 @@
                         this.email.invalidFeedback = data.email[0];
                     }
 
-                    if (this.email.value === "") {
-                        this.email.state = false;
-                        this.email.invalidFeedback = "Este campo não pode ser em branco.";
+                    if ("password" in data) {
+                        this.password.state = false;
+                        this.password.invalidFeedback = data.password[0];
+                    }
+
+                    if ("non_field_errors" in data) {
+                        this.nonFieldErrorMessage = data.non_field_errors[0];
+                        this.password.value = "";
                     }
 
                     if (this.first_name.value === "") {
@@ -264,20 +268,6 @@
                     if (this.last_name.value === "") {
                         this.last_name.state = false;
                         this.last_name.invalidFeedback = "Este campo não pode ser em branco.";
-                    }
-
-                    if ("password" in data) {
-                        this.password.state = false;
-                        this.password.invalidFeedback = data.password[0];
-                    }
-                    if (this.password.value==="#") {
-                        this.password.state = null;
-                        this.password.value = "";
-                    }
-
-                    if ("non_field_errors" in data) {
-                        this.nonFieldErrorMessage = data.non_field_errors[0];
-                        this.password.value = "";
                     }
 
                     if(!this.hora_chegada){

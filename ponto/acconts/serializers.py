@@ -20,3 +20,17 @@ class CadastrarSerializer(serializers.ModelSerializer):
             'password',
         ]
 
+    def validate_username(self, value):
+        if len(value) < 4:
+            raise serializers.ValidationError("Certifique-se de que este campo tenha mais de 4 caracteres.")
+        return value
+
+    def validate_password(self, value):
+        if len(value) < 4:
+            raise serializers.ValidationError("Certifique-se de que este campo tenha mais de 4 caracteres.")
+        return value
+
+    def validate_email(self, value):
+        if value is "":
+            raise serializers.ValidationError("Este campo não pode ser em branco.")
+        return value
