@@ -6,11 +6,11 @@ import getters from "./getters";
 const initialState = {
   authenticating: false,
   user: null,
-  funcionario: null,
+  funcionario: [],
 };
 
 if (isProduction) {
-  initialState.user = window.PONTO.user;
+  initialState.user = window.PONTO;
 }
 
 export default {

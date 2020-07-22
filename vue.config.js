@@ -2,16 +2,22 @@ const path = require("path");
 const LodashModuleReplacementPlugin = require("lodash-webpack-plugin");
 const isProduction = process.env.NODE_ENV === "production";
 
+
+let url = "";
+if(isProduction)
+ url = "http://backend-ponto.herokuapp.com";
+else
+  url = "http://127.0.0.1:8001";
+
 module.exports = {
-  publicPath: isProduction ? "/static/core/" : "/",
-  indexPath: "../../templates/core/index.html",
-  /**
-   * Adicionar os caminhos do vtk js pois o mesmo necessita de ser
-   * transpilado pelo babel
-   *
-   * ref: https://cli.vuejs.org/config/#transpiledependencies
-   */
   transpileDependencies: [],
+  configureWebpack: {
+    performance: {
+      hints: "warning", // enum
+      maxAssetSize: 9048576, // int (in bytes),
+      maxEntrypointSize: 9048576, // int (in bytes)
+    }
+  },
   css: {
     sourceMap: !isProduction,
     loaderOptions: {
@@ -19,20 +25,19 @@ module.exports = {
   },
   devServer: {
     serveIndex: false,
+    disableHostCheck: true,
+    compress: true,
     proxy: {
       "/api": {
-        target: "http://localhost:8001",
-        changeOrigin: true
+        target: url,
+        changeOrigin: true,
+        secure: false
       },
       "/admin": {
-        target: "http://localhost:8001",
-        changeOrigin: true
+        target: url,
+        changeOrigin: true,
+        secure: false
       }
-    }
-  },
-  configureWebpack(config) {
-    if (!isProduction) {
-      config.devtool = "source-map";
     }
   },
   chainWebpack(config) {

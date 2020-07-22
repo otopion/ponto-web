@@ -1,7 +1,5 @@
-import { isProduction } from "@/utils";
 import { LOGIN_BEGIN, LOGIN_END, SET_USER, SET_FUNCIONARIO } from "./types";
 import auth from "../api";
-
 
 export default {
   login({ commit }, { username, password, rememberMe }) {
@@ -14,11 +12,15 @@ export default {
   logout({ commit }) {
     return auth.logout().finally(() => commit(SET_USER, null), commit(SET_FUNCIONARIO, null));
   },
+  getFuncionario({ commit }) {
+    return auth
+    .getFuncionario()
+        .then(({ data }) => {
+          commit(SET_FUNCIONARIO, data);
+        })
+  },
   init({ commit }) {
     return new Promise(resolve => {
-      if (isProduction) {
-        resolve();
-      } else {
         auth
           .getUser()
           .then(({ data }) => {
@@ -27,21 +29,6 @@ export default {
           .finally(() => {
             resolve();
           });
-      }
-      return new Promise(resolve => {
-      if (isProduction) {
-        resolve();
-      } else {
-        auth
-          .getFuncionario()
-          .then(({ data }) => {
-            commit(SET_FUNCIONARIO, data);
-          })
-          .finally(() => {
-            resolve();
-          });
-      }
-    });
     });
   }
 };

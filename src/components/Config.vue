@@ -54,10 +54,6 @@ export default {
         funcionario() {
             return this.$store.state.auth.funcionario;
         },
-        fun() {
-            return this.$store.getters["auth/fun"];
-        }
-
     },
 }
 

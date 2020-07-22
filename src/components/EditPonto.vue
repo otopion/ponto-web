@@ -8,7 +8,7 @@
                 </div>
                 <form @submit.prevent="editar">
                  <table class="table">
-                    <thead class="thead-dark">
+                    <thead class="thead-dark" id="text-edit">
                     <tr>
                         <th scope="col">Data</th>
                         <th scope="col">Horario de cegada</th>
@@ -143,6 +143,9 @@
 </script>
 
 <style lang="scss">
+    #text-edit{
+        font-size: 14px;
+    }
     .bg-modal{
         margin-top: 80px;
         width: 78%;

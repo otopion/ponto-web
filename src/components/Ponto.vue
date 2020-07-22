@@ -15,11 +15,11 @@
         <div class="pesquisa">
             <ponto-date-picker v-model="pesquisa"/>
         </div>
-        <div class="fundo">
+        <div>
             <main class="tabela container view-home-container p-4 card shadow-sm my-3">
                 <b-form @submit.prevent="onSubmit">
                     <table class="table">
-                        <thead class="thead-dark">
+                        <thead class="thead-dark" id="text-ponto">
                         <tr>
                             <th scope="col">Data</th>
                             <th scope="col">Horario de cegada</th>
@@ -58,7 +58,6 @@
                         <get-turno/>
                     </table>
                 </b-form>
-                {{ hora_saida }}
             </main>
             <edit-ponto/>
         </div>
@@ -186,6 +185,9 @@
 </script>
 
 <style lang="scss">
+    #text-ponto th{
+        font-size: 15.5px;
+    }
     #check {
         position: static;
         margin-left: 8px;

@@ -8,6 +8,7 @@ export const requireAuthenticated = (to, from, next) => {
       });
     } else {
       store.dispatch("ponto/getTurno");
+      store.dispatch("auth/getFuncionario");
       next();
     }
   });

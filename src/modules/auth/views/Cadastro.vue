@@ -1,9 +1,9 @@
 <template>
     <div class="fundoo">
-        <div id="login-form">
+        <div id="cadas-form">
     <b-form @submit.prevent="onSubmit">
       <h1>Cadastrar</h1>
-        <div class="mensagem">
+        <div class="mensagem-cadas">
             <b-alert
                     :show="!!nonFieldErrorMessage"
                     variant="danger"
@@ -75,7 +75,7 @@
       </div>
 
         <div class="row">
-      <div class="col-lg-6">
+      <div class="col-lg-6 time-cadas">
           <ponto-time-picker
             v-model="hora_chegada" />
           <label>Hora de entrada</label>
@@ -85,7 +85,7 @@
             >
             </b-form-group>
       </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 time-cadas">
           <ponto-time-picker
             v-model="hora_saida"
              />
@@ -181,13 +181,7 @@
                 }
             },
         },
-        mounted() {
-            this.focusUsername();
-        },
         methods:{
-            focusUsername() {
-            this.$refs.username.$el.focus();
-        },
             async onSubmit() {
                 this.nonFieldErrorMessage = "";
                 this.username.state = null;
@@ -279,7 +273,6 @@
                         this.erro_saida.state = false;
                         this.erro_saida.invalidFeedback = "Este campo não pode ser em branco";
                     }
-                    this.focusUsername();
                 } else {
                     this.nonFieldErrorMessage =
                         "Erro desconhecido, tente novamente mais tarde.";
@@ -291,7 +284,7 @@
 </script>
 
 <style lang="scss">
-    #login-form input{
+    #cadas-form input{
         margin-top:20px
     }
 
@@ -306,7 +299,7 @@
     font-family: arial;
     box-sizing: border-box;
 }
-#login-form {
+#cadas-form {
     width: 600px;
     background: #fff;
     padding: 80px 40px;
@@ -317,19 +310,19 @@
     transform: translate(-50%,-50%);
     margin: 20px 0px;
 }
-#login-form h1 {
+#cadas-form h1 {
     text-align: center;
     color: #00bcd4;
     font-size: 30px;
 }
-#login-form p {
+#cadas-form p {
     font-size: 16px;
     color: #333;
 }
-#login-form p a {
+#cadas-form p a {
     color: #00bcd4;
 }
-#login-form label {
+#cadas-form label {
     color: #848484;
 }
 .input-box{
@@ -396,13 +389,13 @@
     font-size: 13px;
 }
 
-.vue__time-picker .clear-btn{
+.time-cadas .vue__time-picker .clear-btn{
     left: 130px;
     margin-top: 20px;
 }
 
 @media (max-width: 575px){
-#login-form {
+#cadas-form {
     width: 300px;
 }
 }

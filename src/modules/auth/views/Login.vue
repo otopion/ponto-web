@@ -1,5 +1,5 @@
 <template>
-    <div class="fundoo">
+    <div class="fundo">
     <div id="login-form">
     <b-form @submit.prevent="onSubmit">
       <h1>Bem vindo ao PontoWeb</h1>
@@ -86,25 +86,12 @@
             nonFieldErrorMessage: ""
         };
     },
-        mounted() {
-        this.focusUsername();
-        },
-        computed: {
-            authenticating() {
-                return this.$store.state.auth.authenticating;
-            },
-            isAuthenticated() {
-                return this.$store.getters["auth/isAuthenticated"];
-            },
-            fun(){
-                return this.$store.getters["auth/fun"];
-            }
-        },
-
+    computed: {
+        authenticating() {
+            return this.$store.state.auth.authenticating;
+        }
+    },
         methods:{
-            focusUsername() {
-            this.$refs.username.$el.focus();
-        },
             async onSubmit() {
                 this.nonFieldErrorMessage = "";
                 this.username.state = null;
@@ -120,7 +107,7 @@
 
                 try {
                     await this.$store.dispatch("auth/login", data);
-                    this.$router.push({
+                    await this.$router.push({
                         name: "home"
                     });
                 }
@@ -141,7 +128,6 @@
                         this.nonFieldErrorMessage = data.non_field_errors[0];
                         this.password.value = "";
                     }
-                    this.focusUsername();
                 } else {
                     this.nonFieldErrorMessage =
                         "Erro desconhecido, tente novamente mais tarde.";
@@ -152,8 +138,8 @@
     }
 </script>
 
-<style lang="scss">
-    .fundoo{
+<style lang="css">
+    .fundo{
         height: 100%;
         background-color: #00BCD4;
         min-height: 680px;
@@ -240,7 +226,7 @@
     width: 100%;
     height: 50px;
     border: none;
-    background: linear-gradient(70deg,#2196F3,#03bcd4,#2196F3);
+    background: linear-gradient(70deg, #2196f3, #03bcd4,#2196F3);
     background-size: 200%;
     color: #fff;
     outline: none;

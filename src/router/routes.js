@@ -1,24 +1,25 @@
-import { requireAuthenticated } from "../modules/auth/guards";
-import { routes as authRoutes, guards as authGuards } from "@/modules/auth";
+import { requireUnauthenticated, requireAuthenticated } from "../modules/auth/guards";
 
 export default [
         {
-            path: "/login",
-            name: "login",
-            component: () =>
-              import(/* webpackChunkName: "login" */ "@/modules/auth/views/Login.vue"),
-            beforeEnter: authGuards.requireUnauthenticated,
+        path: "/login",
+        name: "login",
+        meta: {
+            title: 'Login',
+        },
+        component: () =>
+            import(/* webpackChunkName: "ponto_web" */ "../modules/auth/views/Login.vue"),
+        beforeEnter: requireUnauthenticated
         },
         {
             path: '/cadastro',
             name: 'cadastro',
             meta: {
-                title: 'Cadastro'
+              title: 'Cadastro',
             },
             component: () => import(/* webpackChunkName: "ponto_web" */ "../modules/auth/views/Cadastro.vue"),
-            beforeEnter: authGuards.requireUnauthenticated,
+            beforeEnter: requireUnauthenticated,
         },
-    ...authRoutes,
         {
             path: '/',
             name: 'pontoWeb',
@@ -48,12 +49,12 @@ export default [
                     component: () => import(/* webpackChunkName: "ponto_web" */ "../components/Ponto.vue"),
                 },
                 {
-                    path: "/config",
-                    name: "configuracao",
-                    component: () =>
-                      import("../components/Config.vue"),
-                    beforeEnter: requireAuthenticated
-
+                    path: "config",
+                    name: "config",
+                    meta: {
+                        title: "Config"
+                    },
+                    component: () => import(/* webpackChunkName: "ponto_web" */ "../components/Config.vue"),
                 },
             ]
         }
