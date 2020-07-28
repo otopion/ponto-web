@@ -6,8 +6,10 @@
         <div class="erro" v-if="data.value===''">
             {{ data.invalidFeedback }}
         </div>
-        <div class="erro" v-if="data.value!==''">
-            {{ hora_chegada.invalidFeedback }}
+        <div class="erro" v-if="data.value!=='' && hora_chegada.value===''">
+            <div v-if="presente===true">
+                {{ hora_chegada.invalidFeedback }}
+            </div>
         </div>
         <div class="lupa">
             <b-icon icon="search"/>
@@ -130,9 +132,19 @@
             limpaDados(){
                 this.data.value = "";
                 this.hora_chegada.value = "";
-                this.hora_saida = null;
-                this.saida_almoco = null;
-                this.entrada_almoco  = null;
+                this.hora_saida = "";
+                this.saida_almoco = "";
+                this.entrada_almoco  = "";
+            },
+            verificaDados(){
+                if(this.hora_chegada.value===null)
+                    this.hora_chegada.value="";
+                if(this.hora_saida===null)
+                    this.hora_saida="";
+                if(this.saida_almoco===null)
+                    this.saida_almoco="";
+                if(this.entrada_almoco===null)
+                    this.entrada_almoco="";
             },
             async onSubmit() {
                 this.data.invalidFeedback = "";
@@ -144,10 +156,10 @@
                     this.hora_chegada.value=null;
                 if(this.hora_saida==="")
                     this.hora_saida=null;
-                if(this.entrada_almoco==="")
-                    this.entrada_almoco=null;
                 if(this.saida_almoco==="")
                     this.saida_almoco=null;
+                if(this.entrada_almoco==="")
+                    this.entrada_almoco=null;
 
                 const data = {
                     data: this.data.value,
@@ -172,10 +184,12 @@
                         if (this.data.value === "") {
                             this.data.state = false;
                             this.data.invalidFeedback = "informe a data de hoje";
+                            this.verificaDados();
                         }
                         if (!this.hora_chegada.value && this.presente) {
                             this.hora_chegada.state = false;
                             this.hora_chegada.invalidFeedback = data.presente[0];
+                            this.verificaDados();
                         }
                     }
                 }

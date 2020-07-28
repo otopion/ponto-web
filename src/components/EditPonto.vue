@@ -34,7 +34,12 @@
                     </tbody>
                  </table>
                     <div class="editErro">
-                        {{ erro.invalidFeedback }}
+                        <div v-if="edit.data===''">
+                            {{ erroData.invalidFeedback }}
+                        </div>
+                        <div v-if="edit.data!=='' && edit.hora_chegada===''">
+                            {{ erroChegada.invalidFeedback }}
+                        </div>
                     </div>
                 </form>
             </div>
@@ -55,11 +60,11 @@
         data(){
           return{
               disabled: true,
-              editChegada: "",
-              editSaida: "",
-              editSaida_almoco: "",
-              editEntrada_almoco: "",
-              erro: {
+              erroData: {
+                  state: null,
+                  invalidFeedback: "",
+              },
+              erroChegada: {
                   state: null,
                   invalidFeedback: "",
               },
@@ -91,12 +96,15 @@
             async fechar() {
                 await this.limpaCampos();
                 this.limpaDados();
-                this.erro.invalidFeedback = "";
+                this.erroData.invalidFeedback = "";
+                this.erroChegada.invalidFeedback = "";
                 document.getElementById('modall').style.top = "-100%";
             },
             async editar() {
-                this.erro.invalidFeedback = "";
-                this.erro.state = null;
+                this.erroData.invalidFeedback = "";
+                this.erroData.state = null;
+                this.erroChegada.invalidFeedback = "";
+                this.erroChegada.state = null;
 
                 const data = {
                     data: this.edit.data,
@@ -129,11 +137,11 @@
                         const { data } = response;
 
                         if (this.edit.data === "") {
-                            this.erro.invalidFeedback = "informe a data de hoje";
+                            this.erroData.invalidFeedback = "informe a data de hoje";
                         }
                         if (!this.edit.hora_chegada && this.edit.presente) {
-                            this.erro.state = false;
-                            this.erro.invalidFeedback = data.presente[0];
+                            this.erroChegada.state = false;
+                            this.erroChegada.invalidFeedback = data.presente[0];
                         }
                     }
                 }
