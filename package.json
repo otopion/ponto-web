@@ -19,7 +19,7 @@
     "date-fns": "^2.11.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.1.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "font-awesome": "^4.7.0",
     "jw-vue-pagination": "^1.0.3",
     "lodash": "^4.17.15",
